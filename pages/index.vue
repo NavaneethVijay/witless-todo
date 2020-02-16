@@ -1,9 +1,22 @@
 <template>
   <div class="main-page">
-    <header class="app-header">
-      <h1 class="app-title"><i class="icofont-deer-head" />Witless</h1>
-      <i class="icofont-ui-user "></i>
-    </header>
+    <Header class="header" :class="{ active: showPopper }" />
+    <div class="filters">
+      <div class="content-main" :class="{ active: showPopper }">
+        <div class="input-field">
+          <input id="active1" type="checkbox" name="active" />
+          <label class="label" for="active1">Progress</label>
+        </div>
+        <div class="input-field">
+          <input id="active3" type="checkbox" name="active" />
+          <label class="label" for="active3">Completed</label>
+        </div>
+        <div class="input-field">
+          <input id="active2" type="checkbox" name="active" />
+          <label class="label" for="active2">My list</label>
+        </div>
+      </div>
+    </div>
     <div class="task-list-main" :class="{ active: showPopper }">
       <div class="task-sections">
         <div class="task-list-title">
@@ -30,21 +43,29 @@
         </div>
       </div>
     </div>
-    <div class="fab-wrapper" @click="showPopper = !showPopper">
+    <div
+      class="fab-wrapper"
+      :class="{ active: showPopper }"
+      @click="showPopper = !showPopper"
+    >
       <div class="fab-icon">
         <i class="icofont-plus" />
       </div>
     </div>
     <div class="bottom-sheet-main" :class="{ active: showPopper }">
-      <TaskCardMini :task="activeTasks[0]" />
+      <AddNewTask />
     </div>
   </div>
 </template>
 <script>
 import TaskCardMini from '@/components/TaskCardMini'
+import AddNewTask from '@/components/AddNewTask'
+import Header from '@/components/Header'
 export default {
   components: {
-    TaskCardMini
+    TaskCardMini,
+    Header,
+    AddNewTask
   },
   data() {
     return {
@@ -84,21 +105,27 @@ export default {
 .bottom-sheet-main {
   visibility: hidden;
   opacity: 0;
-  position: absolute;
+  position: fixed;
   top: 100%;
   left: 0;
   transition: all 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+  background: #1b1b1b;
+  box-sizing: border-box;
+  padding: 20px;
+  border-radius: 8px 8px 0 0;
+  overflow-y: scroll;
   &.active {
     visibility: visible;
-    position: absolute;
-    top: 80px;
+    position: fixed;
+    top: 20%;
     left: 10px;
-    z-index: 2;
+    bottom: 0;
+    z-index: 5;
     opacity: 1;
-    width: calc(100% - 10px);
-    height: calc(100% - 7%);
+    width: calc(100% - 20px);
+    // height: calc(100% - 7%);
     .task-card {
-      height: inherit;
+      height: 100%;
     }
   }
 }
