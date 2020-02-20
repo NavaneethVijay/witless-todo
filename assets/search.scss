@@ -23,7 +23,7 @@ $filter-color: #ffcc80;
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  overflow-x: scroll;
+  overflow-x: auto;
   transition: all 0.3s ease-in-out;
   &.active {
     opacity: 0.2;
@@ -114,6 +114,10 @@ $filter-color: #ffcc80;
 // Add new form
 
 .add-new-main {
+  background: $black-accent1;
+  border-radius: 8px;
+  box-sizing: border-box;
+  padding: 10px;
   .form-header {
     display: flex;
     align-items: center;

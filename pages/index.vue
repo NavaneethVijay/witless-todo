@@ -1,6 +1,5 @@
 <template>
-  <div class="main-page">
-    <Header class="header" :class="{ active: showPopper }" />
+ <div class="main-page">
     <div class="filters">
       <div class="content-main" :class="{ active: showPopper }">
         <div class="input-field">
@@ -43,29 +42,21 @@
         </div>
       </div>
     </div>
-    <div
+    <nuxtLink to='/tasks/add'
       class="fab-wrapper"
       :class="{ active: showPopper }"
-      @click="showPopper = !showPopper"
     >
       <div class="fab-icon">
         <i class="icofont-plus" />
       </div>
-    </div>
-    <div class="bottom-sheet-main" :class="{ active: showPopper }">
-      <AddNewTask />
-    </div>
+    </nuxtLink>
   </div>
 </template>
 <script>
 import TaskCardMini from '@/components/TaskCardMini'
-import AddNewTask from '@/components/AddNewTask'
-import Header from '@/components/Header'
 export default {
   components: {
     TaskCardMini,
-    Header,
-    AddNewTask
   },
   data() {
     return {
