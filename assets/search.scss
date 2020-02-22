@@ -1,0 +1,210 @@
+.search-main {
+  margin-bottom: 15px;
+  input {
+    border: none;
+    border-radius: 8px;
+    background: $black-accent1;
+    border: 1px solid $black-accent1;
+    color: white;
+    box-sizing: border-box;
+    padding: 10px;
+    width: 100%;
+    height: 50px;
+    &:focus {
+      border: 1px solid $primary-accent;
+      outline: none;
+    }
+  }
+}
+
+// Filter style
+$filter-color: #ffcc80;
+.content-main {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  overflow-x: auto;
+  transition: all 0.3s ease-in-out;
+  &.active {
+    opacity: 0.2;
+  }
+}
+.input-field {
+  padding: 5px 8px 8px 8px;
+  margin: 15px 10px 15px 0;
+  background: none;
+  border: 1px solid $filter-color;
+  box-sizing: border-box;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 6.7px 5.3px rgba(0, 0, 0, 0.044),
+    0 22.3px 17.9px rgba(0, 0, 0, 0.066), 0 100px 80px rgba(0, 0, 0, 0.11);
+  backface-visibility: hidden;
+  cursor: pointer;
+  min-width: max-content;
+  font-size: 14px;
+  @media (max-width: 768px) {
+    cursor: default;
+  }
+
+  input[name='active'] {
+    visibility: hidden;
+    &:checked {
+      outline: none;
+      & ~ label {
+        color: #2e2e2e;
+        &::before {
+          background: #ffcc80;
+          transform: scale(25);
+          left: 0;
+        }
+        &::after {
+          transform: scale(1);
+        }
+      }
+    }
+  }
+  .label {
+    overflow: hidden;
+    z-index: 2;
+    position: relative;
+    user-select: none;
+    padding: 0;
+    transition: all 0.3s ease-out;
+    cursor: pointer;
+    @media (max-width: 768px) {
+      cursor: default;
+    }
+
+    &::before {
+      content: '';
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border: 1px solid #ffcc80;
+      border-radius: 50%;
+      box-sizing: border-box;
+      transition: all 0.5s ease-in-out;
+      z-index: -1;
+      position: absolute;
+      top: calc(50% - 6px);
+      left: -20px;
+    }
+    &::after {
+      content: '';
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      border: none;
+      background-image: url('https://image.flaticon.com/icons/svg/446/446191.svg');
+      background-size: 80%;
+      background-repeat: no-repeat;
+      border-radius: 50%;
+      box-sizing: border-box;
+      transition: all 0.4s ease-in-out;
+      transform: scale(0);
+      z-index: -1;
+      position: absolute;
+      top: calc(50% - 6px);
+      left: -20px;
+    }
+  }
+}
+
+// Add new form
+
+.add-new-main {
+  background: $black-accent1;
+  border-radius: 8px;
+  box-sizing: border-box;
+  padding: 10px;
+  .form-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: static;
+    top: 0;
+    background: $black-accent1;
+    z-index: 1;
+    .form-title {
+      display: flex;
+      align-items: center;
+    }
+    .close-box {
+      background: #272727;
+      padding: 5px;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .icofont-list {
+      margin-left: 20px;
+    }
+  }
+  .input-control {
+    margin: 10px 0;
+    box-sizing: border-box;
+    padding: 10px 0px;
+    label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    .button {
+      box-sizing: border-box;
+      padding: 10px 15px;
+      border: none;
+      outline: none;
+      border-radius: 4px;
+      background: $primary-accent;
+      &.block {
+        width: 100%;
+      }
+      &.cancel {
+        border: 1px solid #f64b3c;
+        background: none;
+        color: #f64b3c;
+        &.block {
+          width: 100%;
+        }
+      }
+    }
+  }
+  .input {
+    border: none;
+    border-radius: 8px;
+    background: $black-accent2;
+    border: 1px solid $black-accent2;
+    color: white;
+    box-sizing: border-box;
+    padding: 10px;
+    width: 100%;
+    height: 50px;
+    &:focus {
+      border: 1px solid $primary-accent;
+      outline: none;
+    }
+    &::placeholder {
+      font-weight: bold;
+    }
+  }
+  #duedate-wrapper {
+    .field-input {
+      border: none;
+      border-radius: 8px;
+      background: $black-accent2;
+      border: 1px solid $black-accent2;
+      color: white;
+      box-sizing: border-box;
+      padding: 10px;
+      width: 100%;
+      height: 50px;
+      &:focus {
+        border: 1px solid $primary-accent;
+        outline: none;
+      }
+    }
+  }
+}

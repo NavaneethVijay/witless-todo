@@ -20,7 +20,9 @@
     "express": "^4.16.4",
     "node-sass": "^4.13.0",
     "nuxt": "^2.0.0",
-    "sass-loader": "^8.0.2"
+    "sass-loader": "^8.0.2",
+    "vue-ctk-date-time-picker": "^2.4.0",
+    "vue-select": "^3.4.0"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^1.0.1",
