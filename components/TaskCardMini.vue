@@ -1,5 +1,6 @@
 <template>
-  <div
+  <nuxt-link
+    to="/tasks/view/10"
     class="task-card"
     :data-progress="task.progress"
     @click="isActive = !isActive"
@@ -23,7 +24,7 @@
       </div>
     </div>
     <div class="progress-bar" :style="{ width: task.progress }" />
-  </div>
+  </nuxt-link>
 </template>
 <script>
 export default {

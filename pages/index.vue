@@ -1,5 +1,5 @@
 <template>
- <div class="main-page">
+  <div class="main-page">
     <div class="filters">
       <div class="content-main" :class="{ active: showPopper }">
         <div class="input-field">
@@ -42,7 +42,8 @@
         </div>
       </div>
     </div>
-    <nuxtLink to='/tasks/add'
+    <nuxtLink
+      to="/tasks/add"
       class="fab-wrapper"
       :class="{ active: showPopper }"
     >
@@ -50,13 +51,19 @@
         <i class="icofont-plus" />
       </div>
     </nuxtLink>
+    <div>
+      <Auth />
+    </div>
   </div>
 </template>
 <script>
+import { mapGetters } from 'vuex'
 import TaskCardMini from '@/components/TaskCardMini'
+import Auth from '@/components/Auth'
 export default {
   components: {
     TaskCardMini,
+    Auth
   },
   data() {
     return {
@@ -86,8 +93,41 @@ export default {
           title: 'Customize the health monitor',
           date: ' March, 29th',
           progress: '29%'
+        },
+        {
+          icon: 'icofont-paper-plane icofont-1x',
+          title: 'Business trip to newyork',
+          date: ' March, 29th',
+          progress: '89%'
+        },
+        {
+          icon: 'icofont-pine icofont-1x',
+          title: 'Identify resources to be monitored',
+          date: 'June, 29th',
+          progress: '10%'
+        },
+        {
+          icon: 'icofont-paper-plane icofont-1x',
+          title: 'Install production servers and prerequisite software',
+          date: ' March, 29th',
+          progress: '70%'
+        },
+        {
+          icon: 'icofont-paper-plane icofont-1x',
+          title: 'Customize the health monitor',
+          date: ' March, 29th',
+          progress: '29%'
         }
       ]
+    }
+  },
+  computed: {
+    ...mapGetters({
+      isLoggedIn: 'user/getUserStatus',
+      user: 'user/getUser'
+    }),
+    username() {
+      return this.user ? this.user.username : ', there!'
     }
   }
 }
