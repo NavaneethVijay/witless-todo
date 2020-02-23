@@ -122,29 +122,6 @@ $primary-accent: #14ffec;
       display: block;
       margin-bottom: 10px;
     }
-    .button {
-      box-sizing: border-box;
-      padding: 10px 20px;
-      border: none;
-      outline: none;
-      border-radius: 4px;
-      background: $primary-accent;
-      border: 1px solid $primary-accent;
-      margin: 10px;
-      min-height: 40px;
-      &.block {
-        width: 100%;
-      }
-      &.cancel {
-        border: 1px solid #f64b3c;
-        background: none;
-        color: #f64b3c;
-        display: inline;
-        &.block {
-          width: 100%;
-        }
-      }
-    }
   }
   .input {
     border: none;

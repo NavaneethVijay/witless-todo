@@ -1,19 +1,25 @@
 <template>
-  <div>
-    <p>login value {{ isLoggedIn }}</p>
-    <p>user details {{ user }}</p>
-    <div v-if="isLoggedIn">
-      <p>Hello {{ username }}</p>
-      <p>
-        <button @click="triggerNetlifyIdentityAction('logout')">Log Out</button>
-      </p>
-    </div>
-    <div v-else>
-      <p>You are not logged in.</p>
-      <p>
-        <button @click="triggerNetlifyIdentityAction('login')">Log In</button>
-        <button @click="triggerNetlifyIdentityAction('signup')">Sign Up</button>
-      </p>
+  <div class="auth-main">
+    <div>
+      <div class="logo-holder">
+        <img src="/logo.svg" alt="witless" />
+        <h1>Welcome to Witless</h1>
+        <p>Task management made easy</p>
+      </div>
+      <div class="auth-buttons-main">
+        <button
+          class="button block sign-in"
+          @click="triggerNetlifyIdentityAction('login')"
+        >
+          Sign In
+        </button>
+        <button
+          class="button block sign-up"
+          @click="triggerNetlifyIdentityAction('signup')"
+        >
+          Sign Up
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -62,15 +68,37 @@ export default {
           })
           netlifyIdentity.close()
         })
-      } else if (action == 'logout') {
-        this.currentUser = null
-        this.updateUser({
-          currentUser: this.currentUser
-        })
-        netlifyIdentity.logout()
-        this.$router.push({ name: 'Home' })
       }
     }
   }
 }
 </script>
+<style lang="scss">
+.auth-main {
+  height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.logo-holder {
+  text-align: center;
+  img {
+    width: 200px;
+    height: auto;
+    margin: auto;
+    fill: #fff;
+  }
+  h1 {
+    font-weight: normal;
+  }
+  p {
+    opacity: 0.3;
+  }
+}
+.auth-buttons-main {
+  box-sizing: border-box;
+  padding: 0 40px;
+  margin-top: 40px;
+}
+</style>

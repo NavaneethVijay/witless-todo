@@ -216,3 +216,30 @@ body {
     transform: rotate(45deg);
   }
 }
+
+.button {
+  box-sizing: border-box;
+  padding: 10px 20px;
+  border: none;
+  outline: none;
+  border-radius: 4px;
+  background: $primary-accent;
+  border: 1px solid $primary-accent;
+  margin: 10px;
+  min-height: 40px;
+  font-size: 18px;
+  text-transform: uppercase;
+  font-weight: 500;
+  &.block {
+    width: 100%;
+  }
+  &.cancel {
+    border: 1px solid #f64b3c;
+    background: none;
+    color: #f64b3c;
+    display: inline;
+    &.block {
+      width: 100%;
+    }
+  }
+}

@@ -1,57 +1,59 @@
 <template>
   <div class="main-page">
-    <div class="filters">
-      <div class="content-main" :class="{ active: showPopper }">
-        <div class="input-field">
-          <input id="active1" type="checkbox" name="active" />
-          <label class="label" for="active1">Progress</label>
-        </div>
-        <div class="input-field">
-          <input id="active3" type="checkbox" name="active" />
-          <label class="label" for="active3">Completed</label>
-        </div>
-        <div class="input-field">
-          <input id="active2" type="checkbox" name="active" />
-          <label class="label" for="active2">My list</label>
+    <div v-if="isLoggedIn">
+      <div class="filters">
+        <div class="content-main" :class="{ active: showPopper }">
+          <div class="input-field">
+            <input id="active1" type="checkbox" name="active" />
+            <label class="label" for="active1">Progress</label>
+          </div>
+          <div class="input-field">
+            <input id="active3" type="checkbox" name="active" />
+            <label class="label" for="active3">Completed</label>
+          </div>
+          <div class="input-field">
+            <input id="active2" type="checkbox" name="active" />
+            <label class="label" for="active2">My list</label>
+          </div>
         </div>
       </div>
+      <div class="task-list-main" :class="{ active: showPopper }">
+        <div class="task-sections">
+          <div class="task-list-title">
+            <h4>In Progress <i class="icofont-children-care" /></h4>
+          </div>
+          <div class="task-in-progress-list">
+            <TaskCardMini
+              v-for="(task, index) in activeTasks"
+              :key="index"
+              :task="task"
+            />
+          </div>
+        </div>
+        <div class="task-sections">
+          <div class="task-list-title">
+            <h4>Completed <i class="icofont-check" /></h4>
+          </div>
+          <div class="task-in-progress-list">
+            <TaskCardMini
+              v-for="(task, index) in activeTasks"
+              :key="index"
+              :task="task"
+            />
+          </div>
+        </div>
+      </div>
+      <nuxtLink
+        to="/tasks/add"
+        class="fab-wrapper"
+        :class="{ active: showPopper }"
+      >
+        <div class="fab-icon">
+          <i class="icofont-plus" />
+        </div>
+      </nuxtLink>
     </div>
-    <div class="task-list-main" :class="{ active: showPopper }">
-      <div class="task-sections">
-        <div class="task-list-title">
-          <h4>In Progress <i class="icofont-children-care" /></h4>
-        </div>
-        <div class="task-in-progress-list">
-          <TaskCardMini
-            v-for="(task, index) in activeTasks"
-            :key="index"
-            :task="task"
-          />
-        </div>
-      </div>
-      <div class="task-sections">
-        <div class="task-list-title">
-          <h4>Completed <i class="icofont-check" /></h4>
-        </div>
-        <div class="task-in-progress-list">
-          <TaskCardMini
-            v-for="(task, index) in activeTasks"
-            :key="index"
-            :task="task"
-          />
-        </div>
-      </div>
-    </div>
-    <nuxtLink
-      to="/tasks/add"
-      class="fab-wrapper"
-      :class="{ active: showPopper }"
-    >
-      <div class="fab-icon">
-        <i class="icofont-plus" />
-      </div>
-    </nuxtLink>
-    <div>
+    <div v-if="!isLoggedIn">
       <Auth />
     </div>
   </div>

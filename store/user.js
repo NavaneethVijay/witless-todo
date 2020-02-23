@@ -3,10 +3,11 @@ export const state = () => ({
   isAuth: false
 })
 
-export const getters = () => ({
+export const getters = {
   getUserStatus: (state) => !!state.user,
-  getUser: (state) => JSON.parse(state.user)
-})
+  getUser: (state) => state.user
+}
+
 export const mutations = {
   setUser(state, currentUser) {
     state.user = currentUser

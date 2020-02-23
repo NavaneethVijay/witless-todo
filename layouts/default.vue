@@ -1,15 +1,21 @@
 <template>
   <div class="layout-main">
-    <Header class="header" />
+    <Header v-if="isLoggedIn" class="header" />
     <nuxt />
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import Header from '@/components/Header'
 export default {
   components: {
     Header
+  },
+  computed: {
+    ...mapGetters({
+      isLoggedIn: 'user/getUserStatus'
+    })
   }
 }
 </script>
