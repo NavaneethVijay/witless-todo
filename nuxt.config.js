@@ -1,9 +1,9 @@
 require('dotenv').config()
 
 module.exports = {
-  mode: 'universal',
+  mode: 'spa',
   server: {
-    host: 'localhost'
+    host: 'localhost',
   },
   /*
    ** Headers of the page
@@ -16,10 +16,17 @@ module.exports = {
       {
         hid: 'description',
         name: 'description',
-        content: process.env.npm_package_description || ''
-      }
+        content: process.env.npm_package_description || '',
+      },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
+    link: [
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      {
+        rel: 'stylesheet',
+        href:
+          'https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;600;700&display=swap',
+      },
+    ],
   },
   /*
    ** Customize the progress-bar color
@@ -30,18 +37,18 @@ module.exports = {
    */
   css: [
     { src: '~assets/main.scss', lang: 'scss' },
-    { src: '~assets/icofont.min.css' }
+    { src: '~assets/icofont.min.css' },
   ],
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ['~/plugins/datepicker', { src: '~plugins/firebase.js' }],
+  plugins: ['~/plugins/datepicker', '~/plugins/bootstrap'],
   /*
    ** Nuxt.js dev-modules
    */
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
-    '@nuxtjs/eslint-module'
+    '@nuxtjs/eslint-module',
   ],
   /*
    ** Nuxt.js modules
@@ -51,7 +58,32 @@ module.exports = {
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
     // Doc: https://github.com/nuxt-community/dotenv-module
-    '@nuxtjs/dotenv'
+    '@nuxtjs/dotenv',
+    'nuxt-client-init-module',
+    [
+      '@nuxtjs/firebase',
+      {
+        config: {
+          apiKey: process.env.FB_API_KEY,
+          authDomain: process.env.FB_AUTH_DOMAIN,
+          databaseURL: process.env.FB_DATABASE_URL,
+          projectId: process.env.FB_PROJECT_ID,
+          storageBucket: process.env.FB_STORAGE_BUCKET,
+          messagingSenderId: process.env.FB_MESSAGING_SENDER_ID,
+          appId: process.env.FB_APP_ID,
+        },
+        services: {
+          auth: {
+            persistence: 'local',
+            initialize: {
+              onAuthStateChangedMutation: 'user/ON_AUTH_STATE_CHANGED_MUTATION',
+              onAuthStateChangedAction: null,
+            },
+          },
+          firestore: true,
+        },
+      },
+    ],
   ],
   /*
    ** Axios module configuration
@@ -65,6 +97,6 @@ module.exports = {
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) {}
-  }
+    extend(config, ctx) {},
+  },
 }

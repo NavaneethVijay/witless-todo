@@ -23,7 +23,7 @@ $filter-color: #ffcc80;
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  overflow-x: scroll;
+  overflow-x: auto;
   transition: all 0.3s ease-in-out;
   &.active {
     opacity: 0.2;
@@ -112,94 +112,24 @@ $filter-color: #ffcc80;
 }
 
 // Add new form
-
-.add-new-main {
-  .form-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: static;
-    top: 0;
-    background: $black-accent1;
-    z-index: 1;
-    .form-title {
-      display: flex;
-      align-items: center;
-    }
-    .close-box {
-      background: #272727;
-      padding: 5px;
-      border-radius: 50%;
-      width: 30px;
-      height: 30px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .icofont-list {
-      margin-left: 20px;
-    }
-  }
-  .input-control {
-    margin: 10px 0;
-    box-sizing: border-box;
-    padding: 10px 0px;
-    label {
-      display: block;
-      margin-bottom: 10px;
-    }
-    .button {
-      box-sizing: border-box;
-      padding: 10px 15px;
-      border: none;
-      outline: none;
-      border-radius: 4px;
-      background: $primary-accent;
-      &.block {
-        width: 100%;
-      }
-      &.cancel {
-        border: 1px solid #f64b3c;
-        background: none;
-        color: #f64b3c;
-        &.block {
-          width: 100%;
-        }
-      }
-    }
-  }
-  .input {
-    border: none;
-    border-radius: 8px;
+.v-select {
+  height: 50px;
+  .vs__dropdown-toggle {
+    height: 100%;
     background: $black-accent2;
     border: 1px solid $black-accent2;
     color: white;
     box-sizing: border-box;
-    padding: 10px;
-    width: 100%;
-    height: 50px;
-    &:focus {
-      border: 1px solid $primary-accent;
-      outline: none;
-    }
-    &::placeholder {
-      font-weight: bold;
-    }
-  }
-  #duedate-wrapper {
-    .field-input {
-      border: none;
-      border-radius: 8px;
-      background: $black-accent2;
-      border: 1px solid $black-accent2;
+    .vs__search {
       color: white;
-      box-sizing: border-box;
-      padding: 10px;
-      width: 100%;
-      height: 50px;
-      &:focus {
-        border: 1px solid $primary-accent;
-        outline: none;
+    }
+    .vs__selected {
+      color: white;
+    }
+    .vs__actions {
+      .vs__clear,
+      .vs__open-indicator {
+        fill: white;
       }
     }
   }

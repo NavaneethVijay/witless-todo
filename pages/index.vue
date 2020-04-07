@@ -1,71 +1,71 @@
 <template>
   <div class="main-page">
-    <Header class="header" :class="{ active: showPopper }" />
-    <div class="filters">
-      <div class="content-main" :class="{ active: showPopper }">
-        <div class="input-field">
-          <input id="active1" type="checkbox" name="active" />
-          <label class="label" for="active1">Progress</label>
-        </div>
-        <div class="input-field">
-          <input id="active3" type="checkbox" name="active" />
-          <label class="label" for="active3">Completed</label>
-        </div>
-        <div class="input-field">
-          <input id="active2" type="checkbox" name="active" />
-          <label class="label" for="active2">My list</label>
+    <div v-if="isLoggedIn">
+      <div class="filters">
+        <div class="content-main" :class="{ active: showPopper }">
+          <div class="input-field">
+            <input id="active1" type="checkbox" name="active" />
+            <label class="label" for="active1">Progress</label>
+          </div>
+          <div class="input-field">
+            <input id="active3" type="checkbox" name="active" />
+            <label class="label" for="active3">Completed</label>
+          </div>
+          <div class="input-field">
+            <input id="active2" type="checkbox" name="active" />
+            <label class="label" for="active2">My list</label>
+          </div>
         </div>
       </div>
+      <div class="task-list-main" :class="{ active: showPopper }">
+        <div class="task-sections">
+          <div class="task-list-title">
+            <h4>In Progress <i class="icofont-children-care" /></h4>
+          </div>
+          <div class="task-in-progress-list">
+            <TaskCardMini
+              v-for="(task, index) in activeTasks"
+              :key="index"
+              :task="task"
+            />
+          </div>
+        </div>
+        <div v-if="fireStoreData.length > 0" class="task-sections">
+          <div class="task-list-title">
+            <h4>Pending <i class="icofont-check" /></h4>
+          </div>
+          <div class="task-in-progress-list">
+            <TaskCardMini
+              v-for="(task, index) in fireStoreData"
+              :key="index"
+              :task="task"
+            />
+          </div>
+        </div>
+      </div>
+      <nuxtLink
+        to="/tasks/add"
+        class="fab-wrapper"
+        :class="{ active: showPopper }"
+      >
+        <div class="fab-icon">
+          <i class="icofont-plus" />
+        </div>
+      </nuxtLink>
     </div>
-    <div class="task-list-main" :class="{ active: showPopper }">
-      <div class="task-sections">
-        <div class="task-list-title">
-          <h4>In Progress <i class="icofont-children-care" /></h4>
-        </div>
-        <div class="task-in-progress-list">
-          <TaskCardMini
-            v-for="(task, index) in activeTasks"
-            :key="index"
-            :task="task"
-          />
-        </div>
-      </div>
-      <div class="task-sections">
-        <div class="task-list-title">
-          <h4>Completed <i class="icofont-check" /></h4>
-        </div>
-        <div class="task-in-progress-list">
-          <TaskCardMini
-            v-for="(task, index) in activeTasks"
-            :key="index"
-            :task="task"
-          />
-        </div>
-      </div>
-    </div>
-    <div
-      class="fab-wrapper"
-      :class="{ active: showPopper }"
-      @click="showPopper = !showPopper"
-    >
-      <div class="fab-icon">
-        <i class="icofont-plus" />
-      </div>
-    </div>
-    <div class="bottom-sheet-main" :class="{ active: showPopper }">
-      <AddNewTask />
+    <div v-if="!isLoggedIn">
+      <Auth />
     </div>
   </div>
 </template>
 <script>
+import { mapGetters } from 'vuex'
 import TaskCardMini from '@/components/TaskCardMini'
-import AddNewTask from '@/components/AddNewTask'
-import Header from '@/components/Header'
+import Auth from '@/components/Auth'
 export default {
   components: {
     TaskCardMini,
-    Header,
-    AddNewTask
+    Auth,
   },
   data() {
     return {
@@ -74,31 +74,92 @@ export default {
       activeTasks: [
         {
           icon: 'icofont-paper-plane icofont-1x',
-          title: 'Business trip to newyork',
-          date: ' March, 29th',
-          progress: '89%'
+          name: 'Business trip to newyork',
+          due_date: ' March, 29th',
+          progress: '89%',
+          status: 'pending',
         },
         {
           icon: 'icofont-pine icofont-1x',
-          title: 'Identify resources to be monitored',
-          date: 'June, 29th',
-          progress: '10%'
+          name: 'Identify resources to be monitored',
+          due_date: 'June, 29th',
+          progress: '10%',
+          status: 'pending',
         },
         {
           icon: 'icofont-paper-plane icofont-1x',
-          title: 'Install production servers and prerequisite software',
-          date: ' March, 29th',
-          progress: '70%'
+          name: 'Install production servers and prerequisite software',
+          due_date: ' March, 29th',
+          progress: '70%',
+          status: 'pending',
         },
         {
           icon: 'icofont-paper-plane icofont-1x',
-          title: 'Customize the health monitor',
-          date: ' March, 29th',
-          progress: '29%'
-        }
-      ]
+          name: 'Customize the health monitor',
+          due_date: ' March, 29th',
+          progress: '29%',
+          status: 'pending',
+        },
+        {
+          icon: 'icofont-paper-plane icofont-1x',
+          name: 'Business trip to newyork',
+          due_date: ' March, 29th',
+          progress: '89%',
+          status: 'pending',
+        },
+        {
+          icon: 'icofont-pine icofont-1x',
+          name: 'Identify resources to be monitored',
+          due_date: 'June, 29th',
+          progress: '10%',
+          status: 'pending',
+        },
+        {
+          icon: 'icofont-paper-plane icofont-1x',
+          name: 'Install production servers and prerequisite software',
+          due_date: ' March, 29th',
+          progress: '70%',
+          status: 'pending',
+        },
+        {
+          icon: 'icofont-paper-plane icofont-1x',
+          name: 'Customize the health monitor',
+          due_date: ' March, 29th',
+          progress: '29%',
+          status: 'pending',
+        },
+      ],
+      fireStoreData: [],
     }
-  }
+  },
+  computed: {
+    ...mapGetters({
+      isLoggedIn: 'user/getUserStatus',
+      user: 'user/getUser',
+    }),
+    username() {
+      return this.user ? this.user.username : ', there!'
+    },
+  },
+  mounted() {
+    this.pendingTasks()
+  },
+  methods: {
+    pendingTasks() {
+      let docRef = this.$fireStore
+        .collection('users')
+        .doc(this.user.uid)
+        .collection('tasks')
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            if (doc.data().status == 'pending') {
+              this.fireStoreData.push(doc.data())
+            }
+          })
+        })
+    },
+  },
 }
 </script>
 <style lang="scss">

@@ -1,29 +1,30 @@
 <template>
-  <div
+  <nuxt-link
+    to="/tasks/view/10"
     class="task-card"
     :data-progress="task.progress"
     @click="isActive = !isActive"
   >
     <div class="task-card-content">
       <div class="task-icon">
-        <i :class="task.icon" />
+        <i :class="task.icon ? task.icon : 'icofont-paper-plane icofont-1x'" />
       </div>
       <div class="task-info">
         <div>
           <h3 class="task-title">
-            {{ task.title }}
+            {{ task.name }}
           </h3>
           <p class="task-date">
-            {{ task.date }}
+            {{ task.due_date }}
           </p>
         </div>
         <p class="task-status">
-          In progress<i class="icofont-children-care" />
+          {{ task.status }}<i class="icofont-children-care" />
         </p>
       </div>
     </div>
     <div class="progress-bar" :style="{ width: task.progress }" />
-  </div>
+  </nuxt-link>
 </template>
 <script>
 export default {
@@ -31,13 +32,13 @@ export default {
   props: {
     task: {
       type: Object,
-      default: null
-    }
+      default: null,
+    },
   },
   data() {
     return {
-      isActive: false
+      isActive: false,
     }
-  }
+  },
 }
 </script>
