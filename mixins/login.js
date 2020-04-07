@@ -1,4 +1,3 @@
-import { firebase } from '~/plugins/firebase'
 import { mapActions, mapMutations } from 'vuex'
 
 export default {

@@ -73,7 +73,6 @@
   </transition>
 </template>
 <script>
-import { fireDb } from '~/plugins/firebase'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {

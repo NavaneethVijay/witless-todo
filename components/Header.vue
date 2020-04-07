@@ -35,36 +35,35 @@
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import { fireAuth } from '~/plugins/firebase'
 
 import DropdownMenu from '@innologica/vue-dropdown-menu'
 export default {
   components: {
-    DropdownMenu
+    DropdownMenu,
   },
   data() {
     return {
-      show: false
+      show: false,
     }
   },
   computed: {
     ...mapGetters({
       isLoggedIn: 'user/getUserStatus',
-      user: 'user/getUser'
+      user: 'user/getUser',
     }),
     username() {
       return this.user ? this.user.username : ', there!'
-    }
+    },
   },
   methods: {
     ...mapActions('user', {
-      updateUser: 'updateUser'
+      updateUser: 'updateUser',
     }),
     logout() {
       this.updateUser({
-        currentUser: null
+        currentUser: null,
       })
-      fireAuth
+      this.$fireAuth
         .signOut()
         .then(function() {
           // Sign-out successful.
@@ -74,8 +73,8 @@ export default {
         })
 
       this.$router.push('/')
-    }
-  }
+    },
+  },
 }
 </script>
 <style lang="scss">
