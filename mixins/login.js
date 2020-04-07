@@ -1,5 +1,5 @@
 import { mapActions, mapMutations } from 'vuex'
-
+import firebase from 'firebase'
 export default {
   methods: {
     ...mapMutations('ui', {

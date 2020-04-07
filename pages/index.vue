@@ -142,7 +142,9 @@ export default {
     },
   },
   mounted() {
-    this.pendingTasks()
+    if (this.isLoggedIn) {
+      this.pendingTasks()
+    }
   },
   methods: {
     pendingTasks() {
