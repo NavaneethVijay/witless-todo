@@ -3,11 +3,18 @@
     <div>
       <div class="logo-holder">
         <img src="/logo.svg" alt="witless" />
-        <h1>Welcome to Witless</h1>
-        <p>Task management made easy</p>
+      </div>
+      <div class="app-main-title">
+        <h1>Plan your day with Witless</h1>
+      </div>
+      <div class="app-info-main">
+        <p>
+          Whether you're planning a holiday, creating a shopping list or
+          managing multiple work projects.
+        </p>
       </div>
       <div class="auth-buttons-main">
-        <button class="button block sign-in" @click="googleSignUp">
+        <button class="button  sign-in" @click="googleSignUp">
           Continue with google
         </button>
       </div>
@@ -35,30 +42,60 @@ export default {
 </script>
 <style lang="scss">
 .auth-main {
-  height: 90vh;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  background: #1b1b1b;
+  max-width: 1440px;
+  margin: auto;
+  border-radius: 20px;
+  padding: 1.8rem;
+  border-bottom: 2px solid #14ffec;
+  @media (min-width: 1024px) {
+    padding: 5% 0;
+  }
 }
 .logo-holder {
   text-align: center;
+  @media (min-width: 1024px) {
+    text-align: left;
+  }
   img {
     width: 200px;
     height: auto;
     margin: auto;
     fill: #fff;
   }
+}
+.app-main-title {
   h1 {
-    font-weight: normal;
+    font-size: 2.5rem;
+    @media (min-width: 1024px) {
+      font-size: 3rem;
+    }
   }
+}
+.app-info-main {
   p {
-    opacity: 0.3;
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    font-weight: 100;
+    line-height: 35px;
+    @media (min-width: 1024px) {
+      font-size: 1.4rem;
+      max-width: 60%;
+    }
   }
 }
 .auth-buttons-main {
   box-sizing: border-box;
-  padding: 0 40px;
+  padding: 0;
   margin-top: 40px;
+  @media (min-width: 1024px) {
+    button {
+      cursor: pointer;
+    }
+  }
 }
 </style>

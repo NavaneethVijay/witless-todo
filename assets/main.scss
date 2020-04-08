@@ -2,6 +2,7 @@ $body-background: #0c0c0c;
 $black-accent1: #1b1b1b;
 $black-accent2: #272727;
 $primary-accent: #14ffec;
+$primary-accent-hover: #0bcfbf;
 
 @import './search.scss';
 
@@ -16,7 +17,7 @@ body {
   color: #fff;
   box-sizing: border-box;
   padding: 10px;
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Muli', sans-serif;
 }
 .app-header {
   display: flex;
@@ -35,6 +36,9 @@ body {
   text-decoration: none;
 }
 
+.main-page {
+  margin-top: 30px;
+}
 .fab-wrapper {
   background: $primary-accent;
   color: $body-background;
@@ -231,6 +235,11 @@ body {
   font-size: 18px;
   text-transform: capitalize;
   font-weight: 500;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  &:hover {
+    background: $primary-accent-hover;
+    border: 1px solid $primary-accent-hover;
+  }
   &.block {
     width: 100%;
   }

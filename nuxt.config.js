@@ -24,7 +24,7 @@ module.exports = {
       {
         rel: 'stylesheet',
         href:
-          'https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;600;700&display=swap',
+          'https://fonts.googleapis.com/css2?family=Muli:wght@200;300;400;500;600;700&display=swap',
       },
     ],
   },
@@ -33,9 +33,9 @@ module.exports = {
    */
   loading: { color: '#fff' },
   loadingIndicator: {
-    name: 'rotating-plane',
-    color: '#3B8070',
-    background: 'white',
+    name: 'wandering-cubes',
+    color: '#14ffec',
+    background: 'black',
   },
   /*
    ** Global CSS
