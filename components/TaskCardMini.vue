@@ -1,6 +1,6 @@
 <template>
   <nuxt-link
-    to="/tasks/view/10"
+    :to="'/tasks/view/' + task.id"
     class="task-card"
     :data-progress="task.progress"
     @click="isActive = !isActive"

@@ -125,6 +125,8 @@ body {
   }
   &-title {
     font-weight: 500;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
   &-date {
     font-weight: normal;
@@ -134,7 +136,7 @@ body {
   &-status {
     opacity: 0.3;
     font-size: 0.85rem;
-    margin: 10px 0 0 0;
+    margin: 30px 0 0 0;
   }
   &-info {
     height: 100%;

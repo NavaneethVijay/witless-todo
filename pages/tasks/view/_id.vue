@@ -1,22 +1,20 @@
 <template>
-  <div>
+  <div v-if="currentTask">
     <div class="task-view-main">
       <div class="task-content">
         <header class="task-header">
-          <p class="task-date">Due on March, 29th</p>
-          <h1>Bussiness trip to newyork</h1>
+          <p class="task-date">Due on {{ currentTask.due_date }}</p>
+          <h1>{{ currentTask.name }}</h1>
           <p class="task-status">
-            In progress<i class="icofont-children-care" />
+            {{ currentTask.status }}<i class="icofont-children-care" />
           </p>
         </header>
         <div class="task-labels">
-          <span class="task-label">trip</span>
+          <span class="task-label">{{ currentTask.list }}</span>
         </div>
         <div class="task-details-main">
           <p class="task-description">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aliquam
-            enim harum ipsum autem tempora neque debitis sint veritatis iure
-            iste?
+            {{ currentTask.description }}
           </p>
           <div class="task-actions">
             <label for="task-status" class="task-date">Status</label>
@@ -33,15 +31,19 @@
     <div class="task-footer">
       <footer>
         <div class="footer-actions-content">
-          <p class="task-created">Created on March, 29th</p>
-          <span class="delete-icon"><i class="icofont-bin"></i></span>
+          <p class="task-created">Created on {{ currentTask.created }}</p>
+          <span
+            @click="deleteTask({ taskId: currentTask.id })"
+            class="delete-icon"
+            ><i class="icofont-bin"></i
+          ></span>
         </div>
       </footer>
     </div>
   </div>
 </template>
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 export default {
   transition: 'slide-down',
   data() {
@@ -54,6 +56,28 @@ export default {
   computed: {
     ...mapGetters({
       currentUser: 'user/getUser',
+      currentTask: 'user/getCurrentTask',
+    }),
+  },
+  async fetch({
+    isDev,
+    route,
+    store,
+    env,
+    params,
+    query,
+    req,
+    res,
+    redirect,
+    error,
+  }) {
+    await store.dispatch('user/getCurrentTask', {
+      docId: route.params.id,
+    })
+  },
+  methods: {
+    ...mapActions('user', {
+      deleteTask: 'deleteTask',
     }),
   },
 }
@@ -67,7 +91,7 @@ export default {
 .task-view-main {
   border: 1px solid #1b1b1b;
   border-radius: 8px 8px 0 0;
-  padding: 10px;
+  padding: 30px 20px;
   background: #1b1b1b;
 }
 .task-description {

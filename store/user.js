@@ -2,13 +2,20 @@ export const state = () => ({
   user: null,
   isAuth: false,
   lists: null,
-  pendingTasks: [],
+  tasks: {
+    pending: [],
+    progress: [],
+  },
+  currentTask: null,
 })
 
 export const getters = {
   getUserStatus: (state) => !!state.user,
   getUser: (state) => state.user,
-  getPendingTasks: (state) => state.pendingTasks,
+  getAllTasks: (state) => state.tasks,
+  getPendingTasks: (state) => state.tasks.pending,
+  getProgressTasks: (state) => state.tasks.progress,
+  getCurrentTask: (state) => state.currentTask,
 }
 
 export const mutations = {
@@ -32,8 +39,11 @@ export const mutations = {
   setUserLists(state, payload) {
     state.lists = payload
   },
-  setPendingTasks(state, payload) {
-    state.pendingTasks.push(payload)
+  setTasks(state, { status, tasks }) {
+    state.tasks[status].push(tasks)
+  },
+  setCurrentTask(state, { task }) {
+    state.currentTask = task
   },
 }
 
@@ -65,12 +75,13 @@ export const actions = {
         .collection('tasks')
         .doc()
         .set(task)
+      context.dispatch('getTasks', { status: 'pending' })
       context.commit('ui/unsetLoader', {}, { root: true })
     } catch (error) {
       context.commit('ui/unsetLoader', {}, { root: true })
     }
   },
-  async getPendingTasks(context) {
+  async getTasks(context, { status }) {
     const uid = context.state.user.uid
     await this.$fireStore
       .collection('users')
@@ -79,10 +90,63 @@ export const actions = {
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
-          if (doc.data().status == 'pending') {
-            context.commit('setPendingTasks', doc.data())
+          if (doc.data().status == status) {
+            context.commit('setTasks', {
+              status,
+              tasks: { ...{ id: doc.id }, ...doc.data() },
+            })
           }
         })
       })
+      .catch(function(error) {
+        console.log('Error getting document:', error)
+      })
+  },
+
+  async getCurrentTask(context, { docId }) {
+    context.commit('ui/setLoader', {}, { root: true })
+
+    const uid = context.state.user.uid
+    await this.$fireStore
+      .collection('users')
+      .doc(uid)
+      .collection('tasks')
+      .doc(docId)
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          context.commit('setCurrentTask', {
+            task: { ...{ id: doc.id }, ...doc.data() },
+          })
+          context.commit('ui/unsetLoader', {}, { root: true })
+        } else {
+          // doc.data() will be undefined in this case
+          console.log('No such document!')
+        }
+        context.commit('ui/unsetLoader', {}, { root: true })
+      })
+      .catch(function(error) {
+        console.log('Error getting document:', error)
+      })
+  },
+
+  async deleteTask(context, { taskId }) {
+    context.commit('ui/setLoader', {}, { root: true })
+    const uid = context.state.user.uid
+    await this.$fireStore
+      .collection('users')
+      .doc(uid)
+      .collection('tasks')
+      .doc(taskId)
+      .delete()
+      .then(() => {
+        alert('Document successfully deleted!')
+        this.$router.push('/')
+      })
+      .catch((error) => {
+        context.commit('ui/unsetLoader', {}, { root: true })
+        console.error('Error removing document: ', error)
+      })
+    context.commit('ui/unsetLoader', {}, { root: true })
   },
 }

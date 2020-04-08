@@ -5,15 +5,15 @@
         <div class="content-main">
           <div class="input-field">
             <input id="active1" type="checkbox" name="active" />
-            <label class="label" for="active1">Progress</label>
+            <label class="label" for="active1">Pending</label>
           </div>
           <div class="input-field">
             <input id="active3" type="checkbox" name="active" />
-            <label class="label" for="active3">Completed</label>
+            <label class="label" for="active3">Progress</label>
           </div>
           <div class="input-field">
             <input id="active2" type="checkbox" name="active" />
-            <label class="label" for="active2">My list</label>
+            <label class="label" for="active2">Completed</label>
           </div>
         </div>
       </div>
@@ -33,14 +33,16 @@
             />
           </div>
         </div>
-
-        <div class="task-sections">
+        <div
+          v-if="progressTasks && progressTasks.length > 0"
+          class="task-sections"
+        >
           <div class="task-list-title">
-            <h4>In Progress <i class="icofont-children-care" /></h4>
+            <h4>In Progress <i class="icofont-check" /></h4>
           </div>
           <div class="task-in-progress-list">
             <TaskCardMini
-              v-for="(task, index) in activeTasks"
+              v-for="(task, index) in progressTasks"
               :key="index"
               :task="task"
             />
@@ -136,6 +138,7 @@ export default {
       isLoggedIn: 'user/getUserStatus',
       user: 'user/getUser',
       pendingTasks: 'user/getPendingTasks',
+      progressTasks: 'user/getProgressTasks',
     }),
     username() {
       return this.user ? this.user.username : ', there!'

@@ -110,6 +110,7 @@ export default {
         due_date: '',
         status: 'pending',
         icon: 'icofont-paper-plane icofont-1x',
+        created: '',
       },
       icons: [
         'icofont-paper-plane icofont-1x',
@@ -126,6 +127,7 @@ export default {
     }),
     async createTask(e) {
       e.preventDefault()
+      this.form.created = new Date().toLocaleString()
       await this.addNewTask({ task: this.form, list: 'default' })
       this.form.name = ''
       this.form.description = ''

@@ -10,7 +10,8 @@ export const actions = {
           displayName,
           photoURL,
         })
-        dispatch('user/getPendingTasks', {})
+        dispatch('user/getTasks', { status: 'pending' })
+        dispatch('user/getTasks', { status: 'progress' })
       }
     }
   },

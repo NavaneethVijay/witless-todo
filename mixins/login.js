@@ -8,7 +8,7 @@ export default {
     }),
     ...mapActions('user', {
       createNewList: 'createNewList',
-      getPendingTasks: 'getPendingTasks',
+      getTasks: 'getTasks',
     }),
     async googleSignUp() {
       this.showLoader()
@@ -42,14 +42,14 @@ export default {
                   })
               }
             })
-            .catch(function(error) {
+            .catch((error) => {
               this.hideLoader()
               console.log('Error getting document:', error)
             })
-          await this.getPendingTasks()
+          await this.getTasks({ status: 'pending' })
           this.hideLoader()
         })
-        .catch(function(error) {
+        .catch((error) => {
           this.hideLoader()
           console.error(error)
         })
