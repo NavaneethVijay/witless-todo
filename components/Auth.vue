@@ -57,13 +57,9 @@ export default {
   }
 }
 .logo-holder {
-  text-align: center;
-  @media (min-width: 1024px) {
-    text-align: left;
-  }
   img {
-    width: 200px;
-    height: auto;
+    width: 100px;
+    height: 100px;
     margin: auto;
     fill: #fff;
   }
@@ -79,9 +75,9 @@ export default {
 .app-info-main {
   p {
     margin-top: 1rem;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: 100;
-    line-height: 35px;
+    line-height: 30px;
     @media (min-width: 1024px) {
       font-size: 1.4rem;
       max-width: 60%;

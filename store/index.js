@@ -10,6 +10,7 @@ export const actions = {
           displayName,
           photoURL,
         })
+        dispatch('user/getPendingTasks', {})
       }
     }
   },

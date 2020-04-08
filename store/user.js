@@ -2,11 +2,13 @@ export const state = () => ({
   user: null,
   isAuth: false,
   lists: null,
+  pendingTasks: [],
 })
 
 export const getters = {
   getUserStatus: (state) => !!state.user,
   getUser: (state) => state.user,
+  getPendingTasks: (state) => state.pendingTasks,
 }
 
 export const mutations = {
@@ -29,6 +31,9 @@ export const mutations = {
   },
   setUserLists(state, payload) {
     state.lists = payload
+  },
+  setPendingTasks(state, payload) {
+    state.pendingTasks.push(payload)
   },
 }
 
@@ -64,5 +69,20 @@ export const actions = {
     } catch (error) {
       context.commit('ui/unsetLoader', {}, { root: true })
     }
+  },
+  async getPendingTasks(context) {
+    const uid = context.state.user.uid
+    await this.$fireStore
+      .collection('users')
+      .doc(uid)
+      .collection('tasks')
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          if (doc.data().status == 'pending') {
+            context.commit('setPendingTasks', doc.data())
+          }
+        })
+      })
   },
 }

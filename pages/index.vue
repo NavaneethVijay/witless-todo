@@ -2,7 +2,7 @@
   <div class="main-page">
     <div v-if="isLoggedIn">
       <div class="filters">
-        <div class="content-main" :class="{ active: showPopper }">
+        <div class="content-main">
           <div class="input-field">
             <input id="active1" type="checkbox" name="active" />
             <label class="label" for="active1">Progress</label>
@@ -17,7 +17,23 @@
           </div>
         </div>
       </div>
-      <div class="task-list-main" :class="{ active: showPopper }">
+      <div class="task-list-main">
+        <div
+          v-if="pendingTasks && pendingTasks.length > 0"
+          class="task-sections"
+        >
+          <div class="task-list-title">
+            <h4>Pending <i class="icofont-check" /></h4>
+          </div>
+          <div class="task-in-progress-list">
+            <TaskCardMini
+              v-for="(task, index) in pendingTasks"
+              :key="index"
+              :task="task"
+            />
+          </div>
+        </div>
+
         <div class="task-sections">
           <div class="task-list-title">
             <h4>In Progress <i class="icofont-children-care" /></h4>
@@ -30,24 +46,8 @@
             />
           </div>
         </div>
-        <div v-if="fireStoreData.length > 0" class="task-sections">
-          <div class="task-list-title">
-            <h4>Pending <i class="icofont-check" /></h4>
-          </div>
-          <div class="task-in-progress-list">
-            <TaskCardMini
-              v-for="(task, index) in fireStoreData"
-              :key="index"
-              :task="task"
-            />
-          </div>
-        </div>
       </div>
-      <nuxtLink
-        to="/tasks/add"
-        class="fab-wrapper"
-        :class="{ active: showPopper }"
-      >
+      <nuxtLink to="/tasks/add" class="fab-wrapper">
         <div class="fab-icon">
           <i class="icofont-plus" />
         </div>
@@ -129,37 +129,16 @@ export default {
           status: 'pending',
         },
       ],
-      fireStoreData: [],
     }
   },
   computed: {
     ...mapGetters({
       isLoggedIn: 'user/getUserStatus',
       user: 'user/getUser',
+      pendingTasks: 'user/getPendingTasks',
     }),
     username() {
       return this.user ? this.user.username : ', there!'
-    },
-  },
-  mounted() {
-    if (this.isLoggedIn) {
-      this.pendingTasks()
-    }
-  },
-  methods: {
-    pendingTasks() {
-      let docRef = this.$fireStore
-        .collection('users')
-        .doc(this.user.uid)
-        .collection('tasks')
-        .get()
-        .then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-            if (doc.data().status == 'pending') {
-              this.fireStoreData.push(doc.data())
-            }
-          })
-        })
     },
   },
 }

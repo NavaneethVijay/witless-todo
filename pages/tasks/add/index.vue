@@ -15,6 +15,7 @@
             v-model="form.due_date"
             format="MM-DD-YYYY"
             formatted="ll"
+            :noKeyboard="true"
             :inline="true"
             :only-date="true"
             :dark="true"
@@ -30,6 +31,22 @@
             placeholder="Default"
             :options="['default']"
           />
+        </div>
+        <div class="input-control list-select">
+          <label>Choose an Icon</label>
+          <div class="icon-wrapper">
+            <i
+              class="icon-single"
+              v-for="(icon, index) in icons"
+              :key="index"
+              :class="icon"
+              @click="
+                () => {
+                  form.icon = icon
+                }
+              "
+            />
+          </div>
         </div>
         <div class="input-control">
           <label for="taskname">Name</label>
@@ -92,7 +109,14 @@ export default {
         description: '',
         due_date: '',
         status: 'pending',
+        icon: 'icofont-paper-plane icofont-1x',
       },
+      icons: [
+        'icofont-paper-plane icofont-1x',
+        'icofont-pine icofont-1x',
+        'icofont-golf-cart icofont-1x',
+        'icofont-bathtub icofont-1x',
+      ],
     }
   },
   transition: 'slide-down',
@@ -186,6 +210,15 @@ $primary-accent: #14ffec;
     &::placeholder {
       font-family: 'Nunito', sans-serif;
       // font-weight: bold;
+    }
+  }
+  .icon-wrapper {
+    .icon-single {
+      font-size: 2rem;
+      margin-right: 10px;
+      &.is__active {
+        color: $primary-accent;
+      }
     }
   }
 }

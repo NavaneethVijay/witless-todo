@@ -8,6 +8,7 @@ export default {
     }),
     ...mapActions('user', {
       createNewList: 'createNewList',
+      getPendingTasks: 'getPendingTasks',
     }),
     async googleSignUp() {
       this.showLoader()
@@ -45,6 +46,7 @@ export default {
               this.hideLoader()
               console.log('Error getting document:', error)
             })
+          await this.getPendingTasks()
           this.hideLoader()
         })
         .catch(function(error) {

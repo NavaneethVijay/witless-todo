@@ -24,12 +24,6 @@ export default {
 </script>
 
 <style>
-.header {
-  max-width: 1440px;
-  margin: auto;
-  position: sticky;
-  top: 0;
-}
 *,
 *:before,
 *:after {
