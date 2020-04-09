@@ -4,9 +4,9 @@ export const state = () => ({
   lists: null,
   tasks: {
     pending: [],
-    progress: [],
+    progress: []
   },
-  currentTask: null,
+  currentTask: null
 })
 
 export const getters = {
@@ -15,7 +15,7 @@ export const getters = {
   getAllTasks: (state) => state.tasks,
   getPendingTasks: (state) => state.tasks.pending,
   getProgressTasks: (state) => state.tasks.progress,
-  getCurrentTask: (state) => state.currentTask,
+  getCurrentTask: (state) => state.currentTask
 }
 
 export const mutations = {
@@ -26,6 +26,9 @@ export const mutations = {
   },
   unSetUser(state) {
     state.user = null
+  },
+  unsetTaskList(state, { status }) {
+    state.tasks[status] = []
   },
   ON_AUTH_STATE_CHANGED_MUTATION: (state, { authUser }) => {
     if (authUser) {
@@ -44,13 +47,23 @@ export const mutations = {
   },
   setCurrentTask(state, { task }) {
     state.currentTask = task
-  },
+  }
 }
 
 export const actions = {
+  /**
+   *
+   * @param {*} param0
+   * @param {*} payload
+   */
   updateUser({ commit }, payload) {
     commit('setUser', payload)
   },
+  /**
+   *
+   * @param {*} context
+   * @param {*} payload
+   */
   async createNewList(context, payload) {
     const uid = context.state.user.uid
     try {
@@ -65,7 +78,7 @@ export const actions = {
       context.commit('ui/unsetLoader', {}, { root: true })
     }
   },
-  async addNewTask(context, { task, list }) {
+  async addNewTask(context, { task }) {
     context.commit('ui/setLoader', {}, { root: true })
     const uid = context.state.user.uid
     try {
@@ -83,6 +96,7 @@ export const actions = {
   },
   async getTasks(context, { status }) {
     const uid = context.state.user.uid
+    context.commit('unsetTaskList', { status })
     await this.$fireStore
       .collection('users')
       .doc(uid)
@@ -93,7 +107,7 @@ export const actions = {
           if (doc.data().status == status) {
             context.commit('setTasks', {
               status,
-              tasks: { ...{ id: doc.id }, ...doc.data() },
+              tasks: { ...{ id: doc.id }, ...doc.data() }
             })
           }
         })
@@ -103,9 +117,12 @@ export const actions = {
       })
   },
 
+  /**
+   *
+   * @param {*} context
+   * @param {*} param1
+   */
   async getCurrentTask(context, { docId }) {
-    context.commit('ui/setLoader', {}, { root: true })
-
     const uid = context.state.user.uid
     await this.$fireStore
       .collection('users')
@@ -116,20 +133,23 @@ export const actions = {
       .then((doc) => {
         if (doc.exists) {
           context.commit('setCurrentTask', {
-            task: { ...{ id: doc.id }, ...doc.data() },
+            task: { ...{ id: doc.id }, ...doc.data() }
           })
-          context.commit('ui/unsetLoader', {}, { root: true })
         } else {
           // doc.data() will be undefined in this case
           console.log('No such document!')
         }
-        context.commit('ui/unsetLoader', {}, { root: true })
       })
       .catch(function(error) {
         console.log('Error getting document:', error)
       })
   },
 
+  /**
+   *
+   * @param {*} context
+   * @param {*} param1
+   */
   async deleteTask(context, { taskId }) {
     context.commit('ui/setLoader', {}, { root: true })
     const uid = context.state.user.uid
@@ -141,6 +161,7 @@ export const actions = {
       .delete()
       .then(() => {
         alert('Document successfully deleted!')
+        context.dispatch('getTasks', { status: 'pending' })
         this.$router.push('/')
       })
       .catch((error) => {
@@ -148,5 +169,5 @@ export const actions = {
         console.error('Error removing document: ', error)
       })
     context.commit('ui/unsetLoader', {}, { root: true })
-  },
+  }
 }

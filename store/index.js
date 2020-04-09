@@ -8,11 +8,11 @@ export const actions = {
           uid,
           email,
           displayName,
-          photoURL,
+          photoURL
         })
         dispatch('user/getTasks', { status: 'pending' })
         dispatch('user/getTasks', { status: 'progress' })
       }
     }
-  },
+  }
 }

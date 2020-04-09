@@ -4,11 +4,12 @@ export default {
   methods: {
     ...mapMutations('ui', {
       showLoader: 'setLoader',
-      hideLoader: 'unsetLoader',
+      hideLoader: 'unsetLoader'
     }),
     ...mapActions('user', {
+      updateUser: 'updateUser',
       createNewList: 'createNewList',
-      getTasks: 'getTasks',
+      getTasks: 'getTasks'
     }),
     async googleSignUp() {
       this.showLoader()
@@ -17,7 +18,7 @@ export default {
         .signInWithPopup(provider)
         .then(async (result) => {
           // This gives you a Google Access Token. You can use it to access the Google API.
-          var token = result.credential.accessToken
+          // var token = result.credential.accessToken
 
           // Check if  user exists in firestore
           const { uid } = result.user
@@ -25,17 +26,24 @@ export default {
           docRef
             .get()
             .then(async (doc) => {
-              if (!doc.exists) {
-                // The signed-in user info. Create new user on firestore
-                const { uid, email, displayName, photoURL } = result.user
+              // The signed-in user info. Create new user on firestore
+              const { uid, email, displayName, photoURL } = result.user
 
+              this.updateUser({
+                uid,
+                email,
+                displayName,
+                photoURL
+              })
+
+              if (!doc.exists) {
                 this.$fireStore
                   .collection('users')
                   .doc(uid)
                   .set({
                     email,
                     photoURL,
-                    displayName,
+                    displayName
                   })
                   .then(async () => {
                     await this.createNewList('default')
@@ -53,6 +61,6 @@ export default {
           this.hideLoader()
           console.error(error)
         })
-    },
-  },
+    }
+  }
 }

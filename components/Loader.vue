@@ -1,5 +1,5 @@
 <template>
-  <div class="loader-overlay" v-if="isLoading">
+  <div v-if="isLoading" class="loader-overlay">
     <div class="breeding-rhombus-spinner">
       <div class="rhombus child-1"></div>
       <div class="rhombus child-2"></div>
@@ -19,9 +19,9 @@ export default {
   name: 'Loader',
   computed: {
     ...mapGetters({
-      isLoading: 'ui/showLoader',
-    }),
-  },
+      isLoading: 'ui/showLoader'
+    })
+  }
 }
 </script>
 <style lang="scss" scoped>

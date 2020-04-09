@@ -13,13 +13,13 @@ import Loader from '@/components/Loader'
 export default {
   components: {
     Header,
-    Loader,
+    Loader
   },
   computed: {
     ...mapGetters({
-      isLoggedIn: 'user/getUserStatus',
-    }),
-  },
+      isLoggedIn: 'user/getUserStatus'
+    })
+  }
 }
 </script>
 

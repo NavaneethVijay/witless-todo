@@ -67,7 +67,7 @@ import Auth from '@/components/Auth'
 export default {
   components: {
     TaskCardMini,
-    Auth,
+    Auth
   },
   data() {
     return {
@@ -79,58 +79,58 @@ export default {
           name: 'Business trip to newyork',
           due_date: ' March, 29th',
           progress: '89%',
-          status: 'pending',
+          status: 'pending'
         },
         {
           icon: 'icofont-pine icofont-1x',
           name: 'Identify resources to be monitored',
           due_date: 'June, 29th',
           progress: '10%',
-          status: 'pending',
+          status: 'pending'
         },
         {
           icon: 'icofont-paper-plane icofont-1x',
           name: 'Install production servers and prerequisite software',
           due_date: ' March, 29th',
           progress: '70%',
-          status: 'pending',
+          status: 'pending'
         },
         {
           icon: 'icofont-paper-plane icofont-1x',
           name: 'Customize the health monitor',
           due_date: ' March, 29th',
           progress: '29%',
-          status: 'pending',
+          status: 'pending'
         },
         {
           icon: 'icofont-paper-plane icofont-1x',
           name: 'Business trip to newyork',
           due_date: ' March, 29th',
           progress: '89%',
-          status: 'pending',
+          status: 'pending'
         },
         {
           icon: 'icofont-pine icofont-1x',
           name: 'Identify resources to be monitored',
           due_date: 'June, 29th',
           progress: '10%',
-          status: 'pending',
+          status: 'pending'
         },
         {
           icon: 'icofont-paper-plane icofont-1x',
           name: 'Install production servers and prerequisite software',
           due_date: ' March, 29th',
           progress: '70%',
-          status: 'pending',
+          status: 'pending'
         },
         {
           icon: 'icofont-paper-plane icofont-1x',
           name: 'Customize the health monitor',
           due_date: ' March, 29th',
           progress: '29%',
-          status: 'pending',
-        },
-      ],
+          status: 'pending'
+        }
+      ]
     }
   },
   computed: {
@@ -138,12 +138,12 @@ export default {
       isLoggedIn: 'user/getUserStatus',
       user: 'user/getUser',
       pendingTasks: 'user/getPendingTasks',
-      progressTasks: 'user/getProgressTasks',
+      progressTasks: 'user/getProgressTasks'
     }),
     username() {
       return this.user ? this.user.username : ', there!'
-    },
-  },
+    }
+  }
 }
 </script>
 <style lang="scss">

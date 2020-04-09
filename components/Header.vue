@@ -10,7 +10,7 @@
         :right="true"
         :interactive="true"
       >
-        <img class="user-image" v-if="user" :src="user.photoURL" alt="" />
+        <img v-if="user" class="user-image" :src="user.photoURL" alt="" />
         <div slot="dropdown">
           <ul class="dropdown-list">
             <li class="dropdown-list-item">
@@ -39,29 +39,29 @@ import { mapGetters, mapActions } from 'vuex'
 import DropdownMenu from '@innologica/vue-dropdown-menu'
 export default {
   components: {
-    DropdownMenu,
+    DropdownMenu
   },
   data() {
     return {
-      show: false,
+      show: false
     }
   },
   computed: {
     ...mapGetters({
       isLoggedIn: 'user/getUserStatus',
-      user: 'user/getUser',
+      user: 'user/getUser'
     }),
     username() {
       return this.user ? this.user.username : ', there!'
-    },
+    }
   },
   methods: {
     ...mapActions('user', {
-      updateUser: 'updateUser',
+      updateUser: 'updateUser'
     }),
     logout() {
       this.updateUser({
-        currentUser: null,
+        currentUser: null
       })
       this.$fireAuth
         .signOut()
@@ -70,11 +70,12 @@ export default {
         })
         .catch(function(error) {
           // An error happened.
+          console.error(error)
         })
 
       this.$router.push('/')
-    },
-  },
+    }
+  }
 }
 </script>
 <style lang="scss">
@@ -82,6 +83,8 @@ export default {
   margin: 0;
   padding: 0;
   list-style: none;
+  z-index: 9;
+  box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.05);
   &-item {
     padding: 10px;
     &-divider {

@@ -15,7 +15,7 @@
             v-model="form.due_date"
             format="MM-DD-YYYY"
             formatted="ll"
-            :noKeyboard="true"
+            :no-keyboard="true"
             :inline="true"
             :only-date="true"
             :dark="true"
@@ -25,8 +25,8 @@
         <div class="input-control list-select">
           <label>Add to list</label>
           <v-select
-            required
             v-model="form.list"
+            required
             :searchable="false"
             placeholder="Default"
             :options="['default']"
@@ -36,9 +36,9 @@
           <label>Choose an Icon</label>
           <div class="icon-wrapper">
             <i
-              class="icon-single"
               v-for="(icon, index) in icons"
               :key="index"
+              class="icon-single"
               :class="icon"
               @click="
                 () => {
@@ -51,9 +51,9 @@
         <div class="input-control">
           <label for="taskname">Name</label>
           <input
-            required
-            v-model="form.name"
             id="taskname"
+            v-model="form.name"
+            required
             class="input"
             placeholder="Name"
             type="text"
@@ -63,9 +63,9 @@
         <div class="input-control">
           <label for="description">Description</label>
           <textarea
-            required
-            v-model="form.description"
             id="description"
+            v-model="form.description"
+            required
             class="input"
             placeholder="Description"
             type="text"
@@ -97,8 +97,8 @@ export default {
   computed: {
     ...mapGetters({
       isLoggedIn: 'user/getUserStatus',
-      user: 'user/getUser',
-    }),
+      user: 'user/getUser'
+    })
   },
   data() {
     return {
@@ -110,20 +110,20 @@ export default {
         due_date: '',
         status: 'pending',
         icon: 'icofont-paper-plane icofont-1x',
-        created: '',
+        created: ''
       },
       icons: [
         'icofont-paper-plane icofont-1x',
         'icofont-pine icofont-1x',
         'icofont-golf-cart icofont-1x',
-        'icofont-bathtub icofont-1x',
-      ],
+        'icofont-bathtub icofont-1x'
+      ]
     }
   },
   transition: 'slide-down',
   methods: {
     ...mapActions('user', {
-      addNewTask: 'addNewTask',
+      addNewTask: 'addNewTask'
     }),
     async createTask(e) {
       e.preventDefault()
@@ -132,8 +132,9 @@ export default {
       this.form.name = ''
       this.form.description = ''
       this.form.due_date = ''
-    },
-  },
+      this.$router.push('/')
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>

@@ -22,22 +22,22 @@
   </div>
 </template>
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters } from 'vuex'
 import login from '@/mixins/login'
 export default {
-  data: () => ({
-    currentUser: null,
-  }),
   mixins: [login],
+  data: () => ({
+    currentUser: null
+  }),
   computed: {
     ...mapGetters({
       isLoggedIn: 'user/getUserStatus',
-      user: 'user/getUser',
+      user: 'user/getUser'
     }),
     username() {
       return this.user ? this.user.username : ', there!'
-    },
-  },
+    }
+  }
 }
 </script>
 <style lang="scss">

@@ -15,7 +15,7 @@
             {{ task.name }}
           </h3>
           <p class="task-date">
-            {{ task.due_date }}
+            {{ task.due_date | moment('MMMM Do YYYY') }}
           </p>
         </div>
         <p class="task-status">
@@ -32,13 +32,13 @@ export default {
   props: {
     task: {
       type: Object,
-      default: null,
-    },
+      default: null
+    }
   },
   data() {
     return {
-      isActive: false,
+      isActive: false
     }
-  },
+  }
 }
 </script>
