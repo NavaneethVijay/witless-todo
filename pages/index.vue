@@ -1,6 +1,9 @@
 <template>
   <div class="main-page">
     <div v-if="isLoggedIn">
+      <div class="user-info">
+        <h1>Hi, {{ username }}</h1>
+      </div>
       <div class="filters">
         <div class="content-main">
           <div class="input-field">
@@ -141,7 +144,7 @@ export default {
       progressTasks: 'user/getProgressTasks'
     }),
     username() {
-      return this.user ? this.user.username : ', there!'
+      return this.user.displayName
     }
   }
 }
@@ -172,6 +175,14 @@ export default {
     .task-card {
       height: 100%;
     }
+  }
+}
+</style>
+<style lang="scss">
+.user-info {
+  margin: 20px 0 30px 0;
+  h1 {
+    font-weight: 400;
   }
 }
 </style>

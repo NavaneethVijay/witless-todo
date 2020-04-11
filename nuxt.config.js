@@ -44,16 +44,17 @@ module.exports = {
     { src: '~assets/main.scss', lang: 'scss' },
     { src: '~assets/icofont.min.css' }
   ],
-  /*
+  /*s
    ** Plugins to load before mounting the App
    */
-  plugins: ['~/plugins/datepicker', '~/plugins/bootstrap'],
+  plugins: ['~/plugins/datepicker', '~/plugins/bootstrap', '~/plugins/vuetify'],
   /*
    ** Nuxt.js dev-modules
    */
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
-    '@nuxtjs/eslint-module'
+    '@nuxtjs/eslint-module',
+    '@nuxtjs/vuetify'
   ],
   /*
    ** Nuxt.js modules

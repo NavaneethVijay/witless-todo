@@ -2,45 +2,16 @@
   <div>
     <header class="app-header">
       <NuxtLink class="app-title" to="/">
-        <h1 class="app-title"><i class="icofont-deer-head" />Witless</h1>
+        <h1 class="app-title-text">
+          <i class="icofont-deer-head" /><span>Witless</span>
+        </h1>
       </NuxtLink>
-      <DropdownMenu
-        v-if="isLoggedIn"
-        v-model="show"
-        :right="true"
-        :interactive="true"
-      >
-        <img v-if="user" class="user-image" :src="user.photoURL" alt="" />
-        <div slot="dropdown">
-          <ul class="dropdown-list">
-            <li class="dropdown-list-item">
-              <nuxt-link to="/profile">Profile</nuxt-link>
-            </li>
-            <li class="dropdown-list-item">
-              <nuxt-link to="/manage/lists">Manage Lists</nuxt-link>
-            </li>
-            <li class="dropdown-list-item-divider"></li>
-            <li class="dropdown-list-item" @click="logout">Logout</li>
-            <li class="dropdown-list-item">Settings</li>
-          </ul>
-        </div>
-      </DropdownMenu>
     </header>
-    <div v-if="isLoggedIn" class="search-main">
-      <form action method="post">
-        <input placeholder="Forgot something?" type="text" name="search" />
-      </form>
-    </div>
   </div>
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex'
-
-import DropdownMenu from '@innologica/vue-dropdown-menu'
 export default {
-  components: {
-    DropdownMenu
-  },
   data() {
     return {
       show: false
@@ -52,7 +23,7 @@ export default {
       user: 'user/getUser'
     }),
     username() {
-      return this.user ? this.user.username : ', there!'
+      return this.user ? this.user.displayName : ', there!'
     }
   },
   methods: {

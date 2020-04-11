@@ -1,19 +1,24 @@
 <template>
-  <div class="layout-main">
-    <Loader />
-    <Header class="header" />
-    <nuxt />
-  </div>
+  <v-app>
+    <div class="layout-main">
+      <Loader />
+      <Header class="header" />
+      <nuxt class="nuxt-content-main" />
+      <BottomSheet />
+    </div>
+  </v-app>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
 import Header from '@/components/Header'
 import Loader from '@/components/Loader'
+import BottomSheet from '@/components/BottomSheet'
 export default {
   components: {
     Header,
-    Loader
+    Loader,
+    BottomSheet
   },
   computed: {
     ...mapGetters({
@@ -24,6 +29,13 @@ export default {
 </script>
 
 <style>
+.layout-main {
+  margin-bottom: 50px;
+}
+.nuxt-content-main {
+  position: relative;
+  padding: 10px;
+}
 *,
 *:before,
 *:after {

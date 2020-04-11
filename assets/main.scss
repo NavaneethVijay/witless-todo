@@ -3,8 +3,8 @@ $black-accent1: #1b1b1b;
 $black-accent2: #272727;
 $primary-accent: #14ffec;
 $primary-accent-hover: #0bcfbf;
-
 @import './search.scss';
+@import './variables.scss';
 
 * {
   text-decoration: none;
@@ -12,12 +12,22 @@ $primary-accent-hover: #0bcfbf;
 a {
   color: inherit;
 }
+
 body {
   background: $body-background;
   color: #fff;
   box-sizing: border-box;
-  padding: 10px;
+  padding: 0;
   font-family: 'Muli', sans-serif;
+  .v-application {
+    font-family: 'Muli', sans-serif;
+  }
+  .v-application a {
+    color: inherit;
+  }
+  .v-application p {
+    margin-bottom: inherit;
+  }
 }
 .app-header {
   display: flex;
@@ -31,9 +41,15 @@ body {
 }
 .app-title {
   box-sizing: border-box;
-  padding: 20px 0;
+  padding: 10px 0;
   color: #fff;
   text-decoration: none;
+  .app-title-text {
+    font-weight: normal;
+    span {
+      font-size: 1.5rem;
+    }
+  }
 }
 
 .fab-wrapper {
@@ -41,7 +57,7 @@ body {
   color: $body-background;
   border-radius: 50%;
   position: fixed;
-  bottom: 10px;
+  bottom: 65px;
   right: 10px;
   box-sizing: border-box;
   width: 60px;
@@ -50,6 +66,7 @@ body {
   align-items: center;
   justify-content: center;
   transition: all 0.2s ease-in-out;
+  color: $black-accent1 !important;
   &.active {
     transform: rotate(45deg);
   }
@@ -236,6 +253,7 @@ body {
   text-transform: capitalize;
   font-weight: 500;
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  color: $black-accent1;
   &:hover {
     background: $primary-accent-hover;
     border: 1px solid $primary-accent-hover;

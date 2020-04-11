@@ -4,9 +4,9 @@
       <div class="task-content">
         <header class="task-header">
           <p class="task-date">
-            Due on {{ currentTask.due_date | moment('dddd, MMMM Do YYYY') }}
+            Due on {{ currentTask.due_date | moment('MMMM Do YYYY') }}
           </p>
-          <h1 :contenteditable="canEdit" @input="onEdit">
+          <h1 :contenteditable="canEdit" @dblclick="onEdit">
             {{ currentTask.name }}
           </h1>
           <p class="task-status">
@@ -33,18 +33,16 @@
       </div>
     </div>
     <div class="task-footer">
-      <footer>
-        <div class="footer-actions-content">
-          <p class="task-created">
-            Created on {{ currentTask.created | moment('dddd, MMMM Do YYYY') }}
-          </p>
-          <span
-            class="delete-icon"
-            @click="deleteTask({ taskId: currentTask.id })"
-            ><i class="icofont-bin"></i
-          ></span>
-        </div>
-      </footer>
+      <div class="footer-actions-content">
+        <p class="task-created">
+          Created on {{ currentTask.created | moment('MMMM Do YYYY') }}
+        </p>
+        <span
+          class="delete-icon"
+          @click="deleteTask({ taskId: currentTask.id })"
+          ><i class="icofont-bin"></i
+        ></span>
+      </div>
     </div>
   </div>
 </template>
@@ -76,6 +74,7 @@ export default {
       deleteTask: 'deleteTask'
     }),
     onEdit(evt) {
+      this.canEdit = true
       evt.target.innerText
       //alert(src)
     }
