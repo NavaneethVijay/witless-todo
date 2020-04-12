@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app dark>
     <div class="layout-main">
       <Loader />
       <Header class="header" />
@@ -35,6 +35,7 @@ export default {
 .nuxt-content-main {
   position: relative;
   padding: 10px;
+  margin: 10px;
 }
 *,
 *:before,

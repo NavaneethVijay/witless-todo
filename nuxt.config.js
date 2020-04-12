@@ -47,7 +47,7 @@ module.exports = {
   /*s
    ** Plugins to load before mounting the App
    */
-  plugins: ['~/plugins/datepicker', '~/plugins/bootstrap', '~/plugins/vuetify'],
+  plugins: ['~/plugins/datepicker', '~/plugins/bootstrap'],
   /*
    ** Nuxt.js dev-modules
    */
@@ -56,6 +56,20 @@ module.exports = {
     '@nuxtjs/eslint-module',
     '@nuxtjs/vuetify'
   ],
+  vuetify: {
+    /* module options */
+    customVariables: ['~/assets/variables.scss'],
+    treeShake: true,
+    options: {
+      customProperties: true
+    },
+    defaultAssets: {
+      icons: 'fa'
+    },
+    theme: {
+      dark: true
+    }
+  },
   /*
    ** Nuxt.js modules
    */

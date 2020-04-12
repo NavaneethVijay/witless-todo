@@ -5,7 +5,7 @@
     </div>
     <v-list flat>
       <v-subheader>My Lists</v-subheader>
-      <v-list-item-group v-model="item" color="#14ffec">
+      <v-list-item-group color="#14ffec">
         <v-list-item v-for="(item, i) in items" :key="i">
           <v-list-item-content>
             <v-list-item-title v-text="item.text"></v-list-item-title>
@@ -15,9 +15,9 @@
       <template>
         <v-fab-transition>
           <v-btn
+            light
             v-show="hidden"
             color="#FECB80"
-            light
             absolute
             top
             right
@@ -28,7 +28,7 @@
               }
             "
           >
-            <v-icon>mdi-plus</v-icon>
+            <v-icon small>fas fa-plus</v-icon>
           </v-btn>
         </v-fab-transition>
       </template>
@@ -56,7 +56,6 @@ export default {
   data: () => ({
     dialog: false,
     hidden: false,
-    item: 1,
     items: [
       { text: 'Real-Time', icon: 'mdi-clock' },
       { text: 'Audience', icon: 'mdi-account' },

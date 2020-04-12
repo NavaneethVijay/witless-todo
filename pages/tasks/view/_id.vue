@@ -1,49 +1,51 @@
 <template>
-  <div v-if="currentTask">
-    <div class="task-view-main">
-      <div class="task-content">
-        <header class="task-header">
-          <p class="task-date">
-            Due on {{ currentTask.due_date | moment('MMMM Do YYYY') }}
-          </p>
-          <h1 :contenteditable="canEdit" @dblclick="onEdit">
-            {{ currentTask.name }}
-          </h1>
-          <p class="task-status">
-            {{ currentTask.status }}<i class="icofont-children-care" />
-          </p>
-        </header>
-        <div class="task-labels">
-          <span class="task-label">{{ currentTask.list }}</span>
-        </div>
-        <div class="task-details-main">
-          <p class="task-description">
-            {{ currentTask.description }}
-          </p>
-          <div class="task-actions">
-            <label for="task-status" class="task-date">Status</label>
-            <v-select
-              id="task-status"
-              :searchable="false"
-              placeholder="Progress"
-              :options="['Progress', 'Completed']"
-            />
+  <div class="task-view-page-main">
+    <v-card v-if="currentTask">
+      <div class="task-view-main">
+        <div class="task-content">
+          <header class="task-header">
+            <p class="task-date">
+              Due on {{ currentTask.due_date | moment('MMMM Do YYYY') }}
+            </p>
+            <h1 :contenteditable="canEdit" @dblclick="onEdit">
+              {{ currentTask.name }}
+            </h1>
+            <p class="task-status">
+              {{ currentTask.status }}<i class="icofont-children-care" />
+            </p>
+          </header>
+          <div class="task-labels">
+            <span class="task-label">{{ currentTask.list }}</span>
+          </div>
+          <div class="task-details-main">
+            <p class="task-description">
+              {{ currentTask.description }}
+            </p>
+            <div class="task-actions">
+              <label for="task-status" class="task-date">Status</label>
+              <v-select
+                id="task-status"
+                :searchable="false"
+                placeholder="Progress"
+                :options="['Progress', 'Completed']"
+              />
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="task-footer">
-      <div class="footer-actions-content">
-        <p class="task-created">
-          Created on {{ currentTask.created | moment('MMMM Do YYYY') }}
-        </p>
-        <span
-          class="delete-icon"
-          @click="deleteTask({ taskId: currentTask.id })"
-          ><i class="icofont-bin"></i
-        ></span>
+      <div class="task-footer">
+        <div class="footer-actions-content">
+          <p class="task-created">
+            Created on {{ currentTask.created | moment('MMMM Do YYYY') }}
+          </p>
+          <span
+            class="delete-icon"
+            @click="deleteTask({ taskId: currentTask.id })"
+            ><i class="icofont-bin"></i
+          ></span>
+        </div>
       </div>
-    </div>
+    </v-card>
   </div>
 </template>
 <script>

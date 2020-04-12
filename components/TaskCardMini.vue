@@ -1,5 +1,5 @@
 <template>
-  <nuxt-link
+  <v-card
     :to="'/tasks/view/' + task.id"
     class="task-card"
     :data-progress="task.progress"
@@ -24,7 +24,7 @@
       </div>
     </div>
     <div class="progress-bar" :style="{ width: task.progress }" />
-  </nuxt-link>
+  </v-card>
 </template>
 <script>
 export default {
