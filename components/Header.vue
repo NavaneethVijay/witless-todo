@@ -1,12 +1,20 @@
 <template>
   <div>
-    <header class="app-header">
+    <!-- <header class="app-header">
       <NuxtLink class="app-title" to="/">
         <h1 class="app-title-text">
           <i class="icofont-deer-head" /><span>Witless</span>
         </h1>
       </NuxtLink>
-    </header>
+    </header> -->
+    <v-app-bar dark>
+      <i class="icofont-deer-head" />
+      <v-toolbar-title class="pl-2">
+        <NuxtLink class="app-title" to="/">
+          Witless
+        </NuxtLink></v-toolbar-title
+      >
+    </v-app-bar>
   </div>
 </template>
 <script>
