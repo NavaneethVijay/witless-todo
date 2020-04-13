@@ -1,21 +1,24 @@
 export const state = () => ({
   user: null,
   isAuth: false,
-  lists: null,
+  lists: [],
   tasks: {
     pending: [],
-    progress: []
+    completed: []
   },
-  currentTask: null
+  currentTask: null,
+  currentListTasks: []
 })
 
 export const getters = {
-  getUserStatus: (state) => !!state.user,
+  getUserStatus: (state) => !!state.isAuth,
   getUser: (state) => state.user,
   getAllTasks: (state) => state.tasks,
+  getUserLists: (state) => state.lists,
   getPendingTasks: (state) => state.tasks.pending,
-  getProgressTasks: (state) => state.tasks.progress,
-  getCurrentTask: (state) => state.currentTask
+  getProgressTasks: (state) => state.tasks.completed,
+  getCurrentTask: (state) => state.currentTask,
+  getCurrentListTasks: (state) => state.currentListTasks
 }
 
 export const mutations = {
@@ -40,13 +43,22 @@ export const mutations = {
     }
   },
   setUserLists(state, payload) {
-    state.lists = payload
+    state.lists.push(payload)
+  },
+  unsetUserLists(state) {
+    state.lists = []
   },
   setTasks(state, { status, tasks }) {
     state.tasks[status].push(tasks)
   },
   setCurrentTask(state, { task }) {
     state.currentTask = task
+  },
+  setCurrentListTasks(state, { task }) {
+    state.currentListTasks.push(task)
+  },
+  unsetCurrentListTasks(state) {
+    state.currentListTasks = []
   }
 }
 
@@ -57,7 +69,28 @@ export const actions = {
    * @param {*} payload
    */
   updateUser({ commit }, payload) {
+    console.log(payload)
+
     commit('setUser', payload)
+  },
+
+  async fetchCurrentUserDetails(context) {
+    let user = this.$fireAuth.currentUser
+    await this.$fireStore
+      .collection('users')
+      .doc(user.uid)
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          context.dispatch('updateUser', { ...{ uid: doc.id }, ...doc.data() })
+        } else {
+          // doc.data() will be undefined in this case
+          console.log('No such document!')
+        }
+      })
+      .catch(function(error) {
+        console.log('Error getting document:', error)
+      })
   },
   /**
    *
@@ -73,6 +106,28 @@ export const actions = {
         .collection('lists')
         .doc()
         .set({ name: payload })
+        .then(() => {
+          context.dispatch('fetchUserLists')
+        })
+      context.commit('ui/unsetLoader', {}, { root: true })
+    } catch (e) {
+      context.commit('ui/unsetLoader', {}, { root: true })
+    }
+  },
+  async fetchUserLists(context) {
+    context.commit('unsetUserLists')
+    const uid = context.state.user.uid
+    try {
+      await this.$fireStore
+        .collection('users')
+        .doc(uid)
+        .collection('lists')
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            context.commit('setUserLists', { ...{ id: doc.id }, ...doc.data() })
+          })
+        })
       context.commit('ui/unsetLoader', {}, { root: true })
     } catch (e) {
       context.commit('ui/unsetLoader', {}, { root: true })
@@ -169,5 +224,71 @@ export const actions = {
         console.error('Error removing document: ', error)
       })
     context.commit('ui/unsetLoader', {}, { root: true })
+  },
+
+  async fetchListTasks(context, { listId }) {
+    const uid = context.state.user.uid
+    context.commit('unsetCurrentListTasks')
+    await this.$fireStore
+      .collection('users')
+      .doc(uid)
+      .collection('tasks')
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          if (doc.data().list == listId) {
+            context.commit('setCurrentListTasks', {
+              task: { ...{ id: doc.id }, ...doc.data() }
+            })
+          }
+        })
+      })
+      .catch(function(error) {
+        console.log('Error getting document:', error)
+      })
+  },
+
+  async changeTaskStatus(context, { docId, status }) {
+    const uid = context.state.user.uid
+    let updata = {}
+    if (status) {
+      updata = {
+        status: status ? 'completed' : 'pending',
+        progress: '100%'
+      }
+    } else {
+      updata = {
+        status: status ? 'completed' : 'pending',
+        progress: '10%'
+      }
+    }
+    await this.$fireStore
+      .collection('users')
+      .doc(uid)
+      .collection('tasks')
+      .doc(docId)
+      .update(updata)
+      .then(function() {
+        context.dispatch('user/getTasks', { status: 'pending' })
+        context.dispatch('user/getTasks', { status: 'completed' })
+      })
+      .catch(function(error) {
+        // The document probably doesn't exist.
+        console.error('Error updating document: ', error)
+      })
+  },
+  async updateUserDetails(context, user) {
+    const uid = context.state.user.uid
+    await this.$fireStore
+      .collection('users')
+      .doc(uid)
+      .update(user)
+      .then(async () => {
+        await context.dispatch('fetchCurrentUserDetails')
+      })
+      .catch(function(error) {
+        // The document probably doesn't exist.
+        console.error('Error updating document: ', error)
+      })
   }
 }

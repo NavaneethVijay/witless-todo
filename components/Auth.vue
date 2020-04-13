@@ -51,7 +51,6 @@ export default {
   margin: auto;
   border-radius: 20px;
   padding: 1.8rem;
-  border-bottom: 2px solid #14ffec;
   @media (min-width: 1024px) {
     padding: 5% 0;
   }

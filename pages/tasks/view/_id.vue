@@ -1,6 +1,6 @@
 <template>
   <div class="task-view-page-main">
-    <v-card v-if="currentTask">
+    <v-card v-if="currentTask" :disabled="updatingTask" :loading="updatingTask">
       <div class="task-view-main">
         <div class="task-content">
           <header class="task-header">
@@ -14,21 +14,28 @@
               {{ currentTask.status }}<i class="icofont-children-care" />
             </p>
           </header>
-          <div class="task-labels">
-            <span class="task-label">{{ currentTask.list }}</span>
+          <v-skeleton-loader
+            v-if="!listLabelName"
+            class="pt-2"
+            type="chip"
+          ></v-skeleton-loader>
+          <div v-else class="task-labels pt-4">
+            <nuxt-link :to="'/lists/' + currentTask.list">
+              <span class="task-label">{{ listLabelName.name }}</span>
+            </nuxt-link>
           </div>
           <div class="task-details-main">
             <p class="task-description">
               {{ currentTask.description }}
             </p>
             <div class="task-actions">
-              <label for="task-status" class="task-date">Status</label>
-              <v-select
-                id="task-status"
-                :searchable="false"
-                placeholder="Progress"
-                :options="['Progress', 'Completed']"
-              />
+              <v-switch
+                v-model="status"
+                color="amber lighten-3"
+                inset
+                label="Mark as done"
+                @change="handleStatusChange"
+              ></v-switch>
             </div>
           </div>
         </div>
@@ -46,6 +53,12 @@
         </div>
       </div>
     </v-card>
+    <v-snackbar v-model="snackbar">
+      Sucessfully updated !
+      <v-btn color="pink" text @click="snackbar = false">
+        Close
+      </v-btn>
+    </v-snackbar>
   </div>
 </template>
 <script>
@@ -55,9 +68,13 @@ export default {
   data() {
     return {
       canEdit: false,
+      listLabelName: '',
       writeSuccessful: false,
       readSuccessful: false,
-      text: ''
+      text: '',
+      status: false,
+      updatingTask: false,
+      snackbar: false
     }
   },
   computed: {
@@ -71,6 +88,11 @@ export default {
       docId: route.params.id
     })
   },
+  async mounted() {
+    await this.getListLabel()
+    this.status =
+      this.currentTask.status.toLowerCase() == 'completed' ? true : false
+  },
   methods: {
     ...mapActions('user', {
       deleteTask: 'deleteTask'
@@ -79,6 +101,34 @@ export default {
       this.canEdit = true
       evt.target.innerText
       //alert(src)
+    },
+    getListLabel() {
+      const uid = this.currentUser.uid
+      this.$fireStore
+        .collection('users')
+        .doc(uid)
+        .collection('lists')
+        .doc(this.currentTask.list)
+        .get()
+        .then((doc) => {
+          if (doc.exists) {
+            this.listLabelName = doc.data()
+          } else {
+            this.listLabelName = 'default'
+          }
+        })
+        .catch(function(error) {
+          console.log('Error getting document:', error)
+        })
+    },
+    async handleStatusChange(item) {
+      this.updatingTask = true
+      await this.$store.dispatch('user/changeTaskStatus', {
+        docId: this.currentTask.id,
+        status: item
+      })
+      this.updatingTask = false
+      this.snackbar = true
     }
   }
 }
@@ -112,10 +162,10 @@ export default {
   margin-top: 20px;
 }
 .task-view-main {
-  border: 1px solid #1b1b1b;
+  // border: 1px solid #1b1b1b;
   border-radius: 8px 8px 0 0;
-  padding: 30px 20px;
-  background: #1b1b1b;
+  padding: 10px 20px;
+  // background: #1b1b1b;
 }
 .task-description {
   font-size: 18px;

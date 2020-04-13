@@ -1,108 +1,108 @@
 <template>
   <transition name="fade">
-    <div class="add-new-main">
-      <header class="form-header">
-        <div class="form-title">
-          <h2>Add new task</h2>
-          <i class="icofont-list" />
-        </div>
-      </header>
-      <form method="POST" @submit="createTask">
-        <div class="input-control due-date-wrapper">
-          <label for="duedate">Due date</label>
-          <VueCtkDateTimePicker
-            id="duedate"
-            v-model="form.due_date"
-            format="MM-DD-YYYY"
-            formatted="ll"
-            :no-keyboard="true"
-            :inline="true"
-            :only-date="true"
-            :dark="true"
-            color="#272727"
-          />
-        </div>
-        <div class="input-control list-select">
-          <label>Add to list</label>
-          <v-select
-            v-model="form.list"
-            required
-            :searchable="false"
-            placeholder="Default"
-            :options="['default']"
-          />
-        </div>
-        <div class="input-control list-select">
-          <label>Choose an Icon</label>
-          <div class="icon-wrapper">
-            <i
-              v-for="(icon, index) in icons"
-              :key="index"
-              class="icon-single"
-              :class="icon"
-              @click="
-                () => {
-                  form.icon = icon
-                }
-              "
-            />
-          </div>
-        </div>
-        <div class="input-control">
-          <label for="taskname">Name</label>
-          <input
+    <div>
+      <div class="page-title-main">
+        <h1 class="page-title">Create</h1>
+        <h1>New Task</h1>
+      </div>
+      <div class="add-new-main">
+        <form method="POST" @submit="createTask">
+          <v-text-field
             id="taskname"
             v-model="form.name"
+            color="#FFE082"
             required
-            class="input"
-            placeholder="Name"
+            label="Task Name"
             type="text"
-            name="search"
-          />
-        </div>
-        <div class="input-control">
-          <label for="description">Description</label>
-          <textarea
+            outlined
+          ></v-text-field>
+          <v-dialog
+            v-model="menu1"
+            :close-on-content-click="true"
+            max-width="290"
+          >
+            <template v-slot:activator="{ on }">
+              <v-text-field
+                color="#FFE082"
+                outlined
+                :value="computedDateFormattedMomentjs"
+                clearable
+                label="Due Date"
+                readonly
+                v-on="on"
+                @click:clear="form.due_date = null"
+              ></v-text-field>
+            </template>
+            <v-date-picker
+              v-model="form.due_date"
+              @change="menu1 = false"
+            ></v-date-picker>
+          </v-dialog>
+          <v-select
+            v-model="form.list"
+            color="#FFE082"
+            :items="userLists"
+            label="Add to list"
+            item-text="name"
+            outlined
+            item-value="id"
+          ></v-select>
+          <div class="input-control list-select">
+            <label>Choose an Icon</label>
+            <div class="icon-wrapper">
+              <i
+                v-for="(icon, index) in icons"
+                :key="index"
+                class="icon-single"
+                :class="icon"
+                @click="
+                  () => {
+                    form.icon = icon
+                  }
+                "
+              />
+            </div>
+          </div>
+
+          <v-textarea
             id="description"
             v-model="form.description"
-            required
-            class="input"
             placeholder="Description"
-            type="text"
-            name="search"
-          ></textarea>
-        </div>
+            color="#FFE082"
+            outlined
+            required
+          ></v-textarea>
 
-        <div class="form-actions">
-          <div class="input-control">
-            <button class="button" type="submit">
-              Create new task
-            </button>
-          </div>
-          <div class="input-control">
-            <nuxt-link to="/" class="button cancel block">
-              Cancel
-            </nuxt-link>
-          </div>
-        </div>
-      </form>
+          <v-btn light color="amber lighten-3" large block type="submit">
+            Create task
+          </v-btn>
+        </form>
+      </div>
     </div>
   </transition>
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import moment from 'moment'
 
 export default {
   name: 'AddNewTask',
   computed: {
     ...mapGetters({
       isLoggedIn: 'user/getUserStatus',
-      user: 'user/getUser'
-    })
+      user: 'user/getUser',
+      userLists: 'user/getUserLists'
+    }),
+    computedDateFormattedMomentjs() {
+      return this.form.due_date
+        ? moment(this.form.due_date).format('dddd, MMMM Do YYYY')
+        : ''
+    }
   },
   data() {
     return {
       dueDate: '',
+      menu1: false,
       form: {
         list: 'default',
         name: '',
@@ -110,7 +110,8 @@ export default {
         due_date: '',
         status: 'pending',
         icon: 'icofont-paper-plane icofont-1x',
-        created: ''
+        created: '',
+        progress: '15%'
       },
       icons: [
         'icofont-paper-plane icofont-1x',
@@ -133,6 +134,9 @@ export default {
       this.form.description = ''
       this.form.due_date = ''
       this.$router.push('/')
+    },
+    listHandler(item) {
+      console.log(item)
     }
   }
 }
@@ -141,12 +145,12 @@ export default {
 $body-background: #0c0c0c;
 $black-accent1: #1b1b1b;
 $black-accent2: #272727;
-$primary-accent: #14ffec;
+$primary-accent: #ffe082;
 .add-new-main {
-  background: $black-accent1;
+  // background: $black-accent1;
   border-radius: 8px;
   box-sizing: border-box;
-  padding: 10px 20px;
+  padding: 20px 0;
   .form-actions {
     display: flex;
     align-items: center;
@@ -227,7 +231,7 @@ $primary-accent: #14ffec;
 }
 </style>
 <style lang="scss">
-$primary-accent: #14ffec;
+$primary-accent: #ffe082;
 $black-accent2: #272727;
 #duedate-wrapper {
   .field-input {

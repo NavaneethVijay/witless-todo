@@ -3,15 +3,7 @@ export const actions = {
     if (process.client) {
       let user = app.$fireAuth.currentUser
       if (user) {
-        const { uid, email, displayName, photoURL } = user
-        dispatch('user/updateUser', {
-          uid,
-          email,
-          displayName,
-          photoURL
-        })
-        dispatch('user/getTasks', { status: 'pending' })
-        dispatch('user/getTasks', { status: 'progress' })
+        dispatch('user/fetchCurrentUserDetails')
       }
     }
   }

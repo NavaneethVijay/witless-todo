@@ -7,7 +7,7 @@
         </h1>
       </NuxtLink>
     </header> -->
-    <v-app-bar dark>
+    <v-app-bar flat>
       <i class="icofont-deer-head" />
       <v-toolbar-title class="pl-2">
         <NuxtLink class="app-title" to="/">

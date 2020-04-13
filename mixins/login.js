@@ -47,6 +47,9 @@ export default {
                   })
                   .then(async () => {
                     await this.createNewList('default')
+                    this.createNewList('important')
+                    this.createNewList('work')
+                    this.createNewList('family')
                   })
               }
             })
@@ -55,6 +58,7 @@ export default {
               console.log('Error getting document:', error)
             })
           await this.getTasks({ status: 'pending' })
+          await this.getTasks({ status: 'completed' })
           this.hideLoader()
         })
         .catch((error) => {

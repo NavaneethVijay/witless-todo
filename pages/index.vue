@@ -4,7 +4,7 @@
       <div class="user-info">
         <h1>Hi, {{ username }}</h1>
       </div>
-      <div class="filters">
+      <!-- <div class="filters">
         <div class="content-main">
           <div class="input-field">
             <input id="active1" type="checkbox" name="active" />
@@ -19,7 +19,7 @@
             <label class="label" for="active2">Completed</label>
           </div>
         </div>
-      </div>
+      </div> -->
       <div class="task-list-main">
         <div
           v-if="pendingTasks && pendingTasks.length > 0"
@@ -41,7 +41,7 @@
           class="task-sections"
         >
           <div class="task-list-title">
-            <h4>In Progress <i class="icofont-check" /></h4>
+            <h4>Completed <i class="icofont-check" /></h4>
           </div>
           <div class="task-in-progress-list">
             <TaskCardMini
@@ -58,6 +58,26 @@
         </div>
       </nuxtLink>
     </div>
+    <template>
+      <v-fab-transition>
+        <v-btn
+          light
+          v-show="hidden"
+          color="#FECB80"
+          absolute
+          top
+          right
+          fab
+          @click="
+            () => {
+              dialog = true
+            }
+          "
+        >
+          <v-icon small>fas fa-plus</v-icon>
+        </v-btn>
+      </v-fab-transition>
+    </template>
     <div v-if="!isLoggedIn">
       <Auth />
     </div>
@@ -76,6 +96,7 @@ export default {
     return {
       clicked: false,
       showPopper: false,
+      hidden: false,
       activeTasks: [
         {
           icon: 'icofont-paper-plane icofont-1x',
@@ -135,6 +156,10 @@ export default {
         }
       ]
     }
+  },
+  fetch({ store }) {
+    store.dispatch('user/getTasks', { status: 'pending' })
+    store.dispatch('user/getTasks', { status: 'completed' })
   },
   computed: {
     ...mapGetters({

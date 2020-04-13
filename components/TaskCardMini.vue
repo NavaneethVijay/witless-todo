@@ -42,3 +42,13 @@ export default {
   }
 }
 </script>
+<style lang="scss">
+.task-card-content {
+  .task-date {
+    font-size: 0.7rem;
+  }
+  .task-status {
+    margin-top: 30px;
+  }
+}
+</style>

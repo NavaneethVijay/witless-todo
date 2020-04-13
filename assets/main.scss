@@ -1,7 +1,7 @@
 $body-background: #0c0c0c;
 $black-accent1: #1b1b1b;
 $black-accent2: #272727;
-$primary-accent: #14ffec;
+$primary-accent: #ffe082;
 $primary-accent-hover: #0bcfbf;
 @import './search.scss';
 
@@ -26,6 +26,12 @@ body {
   }
   .v-application p {
     margin-bottom: inherit;
+  }
+  .theme--dark.v-text-field--outlined:not(.v-input--is-focused):not(.v-input--has-state)
+    > .v-input__control
+    > .v-input__slot
+    fieldset {
+    color: #272727;
   }
 }
 .app-header {
@@ -146,14 +152,15 @@ body {
   }
   &-date {
     font-weight: normal;
-    font-size: 0.7rem;
-    opacity: 0.3;
+    font-size: 0.9rem;
+    opacity: 0.5;
     margin-top: 10px;
   }
   &-status {
-    opacity: 0.3;
+    opacity: 0.5;
     font-size: 0.85rem;
-    margin: 30px 0 0 0;
+    margin: 10px 0 0 0;
+    text-transform: capitalize;
   }
   &-info {
     height: 100%;

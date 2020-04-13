@@ -37,8 +37,8 @@ $filter-color: #ffcc80;
   box-sizing: border-box;
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 6.7px 5.3px rgba(0, 0, 0, 0.044),
-    0 22.3px 17.9px rgba(0, 0, 0, 0.066), 0 100px 80px rgba(0, 0, 0, 0.11);
+  // box-shadow: 0 6.7px 5.3px rgba(0, 0, 0, 0.044),
+  //   0 22.3px 17.9px rgba(0, 0, 0, 0.066), 0 100px 80px rgba(0, 0, 0, 0.11);
   backface-visibility: hidden;
   cursor: pointer;
   min-width: max-content;

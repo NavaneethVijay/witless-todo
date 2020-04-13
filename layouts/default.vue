@@ -1,10 +1,10 @@
 <template>
   <v-app dark>
-    <div class="layout-main">
+    <div class="layout-main" id="scroll-area-1">
       <Loader />
-      <Header class="header" />
+      <Header v-if="isLoggedIn" class="header" />
       <nuxt class="nuxt-content-main" />
-      <BottomSheet />
+      <BottomSheet v-if="isLoggedIn" />
     </div>
   </v-app>
 </template>
@@ -19,6 +19,17 @@ export default {
     Header,
     Loader,
     BottomSheet
+  },
+  data() {
+    return {
+      drawer: true,
+      items: [
+        { title: 'Home', icon: 'mdi-home-city' },
+        { title: 'My Account', icon: 'mdi-account' },
+        { title: 'Users', icon: 'mdi-account-group-outline' }
+      ],
+      mini: true
+    }
   },
   computed: {
     ...mapGetters({
