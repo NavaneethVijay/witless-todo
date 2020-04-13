@@ -11,14 +11,14 @@ export const state = () => ({
 })
 
 export const getters = {
-  getUserStatus: (state) => !!state.isAuth,
-  getUser: (state) => state.user,
-  getAllTasks: (state) => state.tasks,
-  getUserLists: (state) => state.lists,
-  getPendingTasks: (state) => state.tasks.pending,
-  getProgressTasks: (state) => state.tasks.completed,
-  getCurrentTask: (state) => state.currentTask,
-  getCurrentListTasks: (state) => state.currentListTasks
+  getUserStatus: state => !!state.isAuth,
+  getUser: state => state.user,
+  getAllTasks: state => state.tasks,
+  getUserLists: state => state.lists,
+  getPendingTasks: state => state.tasks.pending,
+  getProgressTasks: state => state.tasks.completed,
+  getCurrentTask: state => state.currentTask,
+  getCurrentListTasks: state => state.currentListTasks
 }
 
 export const mutations = {
@@ -29,6 +29,15 @@ export const mutations = {
   },
   unSetUser(state) {
     state.user = null
+  },
+  logoutUser(state) {
+    state.user = null
+    state.isAuth = false
+    state.lists = []
+    state.tasks.pending = []
+    state.tasks.completed = []
+    state.currentTask = null
+    state.currentListTasks = []
   },
   unsetTaskList(state, { status }) {
     state.tasks[status] = []
@@ -69,8 +78,6 @@ export const actions = {
    * @param {*} payload
    */
   updateUser({ commit }, payload) {
-    console.log(payload)
-
     commit('setUser', payload)
   },
 
@@ -80,7 +87,7 @@ export const actions = {
       .collection('users')
       .doc(user.uid)
       .get()
-      .then((doc) => {
+      .then(doc => {
         if (doc.exists) {
           context.dispatch('updateUser', { ...{ uid: doc.id }, ...doc.data() })
         } else {
@@ -123,8 +130,8 @@ export const actions = {
         .doc(uid)
         .collection('lists')
         .get()
-        .then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
             context.commit('setUserLists', { ...{ id: doc.id }, ...doc.data() })
           })
         })
@@ -157,8 +164,8 @@ export const actions = {
       .doc(uid)
       .collection('tasks')
       .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
+      .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
           if (doc.data().status == status) {
             context.commit('setTasks', {
               status,
@@ -185,7 +192,7 @@ export const actions = {
       .collection('tasks')
       .doc(docId)
       .get()
-      .then((doc) => {
+      .then(doc => {
         if (doc.exists) {
           context.commit('setCurrentTask', {
             task: { ...{ id: doc.id }, ...doc.data() }
@@ -219,7 +226,7 @@ export const actions = {
         context.dispatch('getTasks', { status: 'pending' })
         this.$router.push('/')
       })
-      .catch((error) => {
+      .catch(error => {
         context.commit('ui/unsetLoader', {}, { root: true })
         console.error('Error removing document: ', error)
       })
@@ -234,8 +241,8 @@ export const actions = {
       .doc(uid)
       .collection('tasks')
       .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
+      .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
           if (doc.data().list == listId) {
             context.commit('setCurrentListTasks', {
               task: { ...{ id: doc.id }, ...doc.data() }
@@ -285,6 +292,22 @@ export const actions = {
       .update(user)
       .then(async () => {
         await context.dispatch('fetchCurrentUserDetails')
+      })
+      .catch(function(error) {
+        // The document probably doesn't exist.
+        console.error('Error updating document: ', error)
+      })
+  },
+  async updateTaskDetails(context, { docId, task }) {
+    const uid = context.state.user.uid
+    await this.$fireStore
+      .collection('users')
+      .doc(uid)
+      .collection('tasks')
+      .doc(docId)
+      .update(task)
+      .then(async () => {
+        // await context.dispatch('fetchCurrentUserDetails')
       })
       .catch(function(error) {
         // The document probably doesn't exist.

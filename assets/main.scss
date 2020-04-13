@@ -2,7 +2,7 @@ $body-background: #0c0c0c;
 $black-accent1: #1b1b1b;
 $black-accent2: #272727;
 $primary-accent: #ffe082;
-$primary-accent-hover: #0bcfbf;
+$primary-accent-hover: #ffd54f;
 @import './search.scss';
 
 * {
@@ -58,23 +58,9 @@ body {
 }
 
 .fab-wrapper {
-  background: $primary-accent;
-  color: $body-background;
-  border-radius: 50%;
   position: fixed;
   bottom: 65px;
   right: 10px;
-  box-sizing: border-box;
-  width: 60px;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease-in-out;
-  color: $black-accent1 !important;
-  &.active {
-    transform: rotate(45deg);
-  }
 }
 .header {
   &.active {
@@ -173,7 +159,7 @@ body {
 @keyframes scaleUp {
   0% {
     opacity: 0;
-    transform: translateY(-40%);
+    transform: translateY(-20%);
   }
   100% {
     opacity: 1;

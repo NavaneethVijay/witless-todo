@@ -128,7 +128,7 @@ export default {
     }),
     async createTask(e) {
       e.preventDefault()
-      this.form.created = new Date().toLocaleString()
+      this.form.created = moment(new Date()).format('dddd, MMMM Do YYYY')
       await this.addNewTask({ task: this.form, list: 'default' })
       this.form.name = ''
       this.form.description = ''

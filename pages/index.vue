@@ -52,32 +52,19 @@
           </div>
         </div>
       </div>
-      <nuxtLink to="/tasks/add" class="fab-wrapper">
+      <div class="fab-wrapper">
+        <v-fab-transition>
+          <v-btn light color="#FECB80" fab>
+            <v-icon small>fas fa-plus</v-icon>
+          </v-btn>
+        </v-fab-transition>
+      </div>
+      <!-- <nuxtLink to="/tasks/add" class="fab-wrapper">
         <div class="fab-icon">
           <i class="icofont-plus" />
         </div>
-      </nuxtLink>
+      </nuxtLink> -->
     </div>
-    <template>
-      <v-fab-transition>
-        <v-btn
-          light
-          v-show="hidden"
-          color="#FECB80"
-          absolute
-          top
-          right
-          fab
-          @click="
-            () => {
-              dialog = true
-            }
-          "
-        >
-          <v-icon small>fas fa-plus</v-icon>
-        </v-btn>
-      </v-fab-transition>
-    </template>
     <div v-if="!isLoggedIn">
       <Auth />
     </div>

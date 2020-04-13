@@ -7,7 +7,11 @@
             <p class="task-date">
               Due on {{ currentTask.due_date | moment('MMMM Do YYYY') }}
             </p>
-            <h1 :contenteditable="canEdit" @dblclick="onEdit">
+            <h1
+              :contenteditable="canEdit"
+              @blur="updateTaskName"
+              @dblclick="onEdit"
+            >
               {{ currentTask.name }}
             </h1>
             <p class="task-status">
@@ -25,7 +29,12 @@
             </nuxt-link>
           </div>
           <div class="task-details-main">
-            <p class="task-description">
+            <p
+              :contenteditable="canEdit"
+              @blur="updateTaskDescription"
+              @dblclick="onEdit"
+              class="task-description"
+            >
               {{ currentTask.description }}
             </p>
             <div class="task-actions">
@@ -55,7 +64,7 @@
     </v-card>
     <v-snackbar v-model="snackbar">
       Sucessfully updated !
-      <v-btn color="pink" text @click="snackbar = false">
+      <v-btn color="amber lighten-3" text @click="snackbar = false">
         Close
       </v-btn>
     </v-snackbar>
@@ -97,10 +106,34 @@ export default {
     ...mapActions('user', {
       deleteTask: 'deleteTask'
     }),
+    async updateTaskName(evt) {
+      if (this.canEdit) {
+        this.updatingTask = true
+        let src = evt.target.innerText
+        await this.$store.dispatch('user/updateTaskDetails', {
+          docId: this.currentTask.id,
+          task: {
+            name: src
+          }
+        })
+        this.updatingTask = false
+      }
+    },
+    async updateTaskDescription(evt) {
+      if (this.canEdit) {
+        this.updatingTask = true
+        let src = evt.target.innerText
+        await this.$store.dispatch('user/updateTaskDetails', {
+          docId: this.currentTask.id,
+          task: {
+            description: src
+          }
+        })
+        this.updatingTask = false
+      }
+    },
     onEdit(evt) {
       this.canEdit = true
-      evt.target.innerText
-      //alert(src)
     },
     getListLabel() {
       const uid = this.currentUser.uid
@@ -110,7 +143,7 @@ export default {
         .collection('lists')
         .doc(this.currentTask.list)
         .get()
-        .then((doc) => {
+        .then(doc => {
           if (doc.exists) {
             this.listLabelName = doc.data()
           } else {

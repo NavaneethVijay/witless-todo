@@ -3,7 +3,13 @@ export const actions = {
     if (process.client) {
       let user = app.$fireAuth.currentUser
       if (user) {
-        dispatch('user/fetchCurrentUserDetails')
+        const { uid, email, displayName, photoURL } = user
+        dispatch('user/updateUser', {
+          uid,
+          email,
+          displayName,
+          photoURL
+        })
       }
     }
   }
