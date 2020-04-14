@@ -54,7 +54,7 @@
       </div>
       <div class="fab-wrapper">
         <v-fab-transition>
-          <v-btn light color="#FECB80" fab>
+          <v-btn to="/tasks/add" light color="#FECB80" fab>
             <v-icon small>fas fa-plus</v-icon>
           </v-btn>
         </v-fab-transition>
