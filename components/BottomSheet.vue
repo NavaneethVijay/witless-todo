@@ -6,7 +6,7 @@
     fixed
     bottom
     shift
-    color="#FFCA28"
+    color="primary"
   >
     <v-btn height="inherit" to="/">
       <span>Tasks</span>

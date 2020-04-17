@@ -12,7 +12,7 @@
             <v-icon small left> {{ icons[i] }} </v-icon> {{ list.name }}
           </div>
           <template v-slot:actions>
-            <v-icon x-small color="#FFE082">fas fa-chevron-down</v-icon>
+            <v-icon x-small color="primary">fas fa-chevron-down</v-icon>
           </template>
         </v-expansion-panel-header>
 
@@ -25,7 +25,7 @@
               small
               text
               flat
-              color="amber lighten-3"
+              color="primary"
             >
               View tasks
             </v-btn>
@@ -41,7 +41,7 @@
         <v-btn
           v-show="hidden"
           light
-          color="#FECB80"
+          color="primary"
           absolute
           top
           right

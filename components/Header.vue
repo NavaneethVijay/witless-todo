@@ -1,19 +1,16 @@
 <template>
   <div>
-    <!-- <header class="app-header">
-      <NuxtLink class="app-title" to="/">
-        <h1 class="app-title-text">
-          <i class="icofont-deer-head" /><span>Witless</span>
-        </h1>
-      </NuxtLink>
-    </header> -->
     <v-app-bar flat>
-      <i class="icofont-deer-head" />
-      <v-toolbar-title class="pl-2">
-        <NuxtLink class="app-title" to="/">
-          Witless
-        </NuxtLink></v-toolbar-title
-      >
+      <v-container>
+        <div class="header-content">
+          <i class="icofont-deer-head" />
+          <v-toolbar-title class="pl-2">
+            <NuxtLink class="app-title" to="/">
+              Witless
+            </NuxtLink></v-toolbar-title
+          >
+        </div>
+      </v-container>
     </v-app-bar>
   </div>
 </template>
@@ -58,6 +55,10 @@ export default {
 }
 </script>
 <style lang="scss">
+.header-content {
+  display: flex;
+  align-items: center;
+}
 .dropdown-list {
   margin: 0;
   padding: 0;

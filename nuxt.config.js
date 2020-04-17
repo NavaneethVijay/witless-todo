@@ -1,3 +1,4 @@
+import colors from 'vuetify/lib/util/colors'
 require('dotenv').config()
 
 module.exports = {
@@ -67,7 +68,22 @@ module.exports = {
       icons: 'fa'
     },
     theme: {
-      dark: true
+      dark: true,
+      options: {
+        customProperties: true
+      },
+      themes: {
+        light: {
+          primary: '#FFD54F',
+          secondary: '#b0bec5',
+          anchor: '#FFCA28'
+        },
+        dark: {
+          primary: '#FFD54F',
+          secondary: '#b0bec5',
+          anchor: '#FFD54F'
+        }
+      }
     }
   },
   /*

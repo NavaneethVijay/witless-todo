@@ -13,6 +13,13 @@
       <v-card-subtitle>
         {{ profile.email }}
       </v-card-subtitle>
+      <v-list-item>
+        <v-list-item-content>
+          <v-btn @click="logout" color="error">
+            Logout
+          </v-btn>
+        </v-list-item-content>
+      </v-list-item>
     </v-card>
     <v-list class="mt-4">
       <v-subheader>Settings</v-subheader>
@@ -25,11 +32,6 @@
             inset
             label="Use Dark theme"
           ></v-switch>
-        </v-list-item-content>
-      </v-list-item>
-      <v-list-item>
-        <v-list-item-content>
-          <v-list-item-title @click="logout">Logout</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
     </v-list>

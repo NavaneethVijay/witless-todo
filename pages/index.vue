@@ -52,13 +52,7 @@
           </div>
         </div>
       </div>
-      <div class="fab-wrapper">
-        <v-fab-transition>
-          <v-btn to="/tasks/add" light color="#FECB80" fab>
-            <v-icon small>fas fa-plus</v-icon>
-          </v-btn>
-        </v-fab-transition>
-      </div>
+
       <!-- <nuxtLink to="/tasks/add" class="fab-wrapper">
         <div class="fab-icon">
           <i class="icofont-plus" />

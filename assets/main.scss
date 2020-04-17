@@ -1,7 +1,7 @@
 $body-background: #0c0c0c;
 $black-accent1: #1b1b1b;
 $black-accent2: #272727;
-$primary-accent: #ffe082;
+$primary-accent: var(--v-primary-base);
 $primary-accent-hover: #ffd54f;
 @import './search.scss';
 
