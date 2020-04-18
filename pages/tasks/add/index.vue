@@ -2,15 +2,17 @@
   <transition name="fade">
     <div>
       <div class="page-title-main">
-        <h1 class="page-title">Create</h1>
-        <h1>New Task</h1>
+        <h1 class="page-title">Create New task</h1>
+        <p>
+          What's on your mind?
+        </p>
       </div>
       <div class="add-new-main">
         <form method="POST" @submit="createTask">
           <v-text-field
             id="taskname"
             v-model="form.name"
-            color="#FFE082"
+            color="primary"
             required
             label="Task Name"
             type="text"
@@ -23,7 +25,7 @@
           >
             <template v-slot:activator="{ on }">
               <v-text-field
-                color="#FFE082"
+                color="primary"
                 outlined
                 :value="computedDateFormattedMomentjs"
                 clearable
@@ -40,7 +42,7 @@
           </v-dialog>
           <v-select
             v-model="form.list"
-            color="#FFE082"
+            color="primary"
             :items="userLists"
             label="Add to list"
             item-text="name"
@@ -68,12 +70,19 @@
             id="description"
             v-model="form.description"
             placeholder="Description"
-            color="#FFE082"
+            color="primary"
             outlined
             required
           ></v-textarea>
 
-          <v-btn light color="amber lighten-3" large block type="submit">
+          <v-btn
+            light
+            color="primary"
+            class="black--text"
+            large
+            block
+            type="submit"
+          >
             Create task
           </v-btn>
         </form>
@@ -88,17 +97,20 @@ import moment from 'moment'
 export default {
   name: 'AddNewTask',
   middleware: 'authenticated',
+  async fetch({ store }) {
+    await store.dispatch('user/fetchUserLists')
+  },
   computed: {
     ...mapGetters({
       isLoggedIn: 'user/getUserStatus',
       user: 'user/getUser',
-      userLists: 'user/getUserLists'
+      userLists: 'user/getUserLists',
     }),
     computedDateFormattedMomentjs() {
       return this.form.due_date
         ? moment(this.form.due_date).format('dddd, MMMM Do YYYY')
         : ''
-    }
+    },
   },
   data() {
     return {
@@ -112,20 +124,20 @@ export default {
         status: 'pending',
         icon: 'icofont-paper-plane icofont-1x',
         created: '',
-        progress: '15%'
+        progress: '15%',
       },
       icons: [
         'icofont-paper-plane icofont-1x',
         'icofont-pine icofont-1x',
         'icofont-golf-cart icofont-1x',
-        'icofont-bathtub icofont-1x'
-      ]
+        'icofont-bathtub icofont-1x',
+      ],
     }
   },
   transition: 'slide-down',
   methods: {
     ...mapActions('user', {
-      addNewTask: 'addNewTask'
+      addNewTask: 'addNewTask',
     }),
     async createTask(e) {
       e.preventDefault()
@@ -138,15 +150,15 @@ export default {
     },
     listHandler(item) {
       console.log(item)
-    }
-  }
+    },
+  },
 }
 </script>
 <style lang="scss" scoped>
 $body-background: #0c0c0c;
 $black-accent1: #1b1b1b;
 $black-accent2: #272727;
-$primary-accent: #ffe082;
+$primary-accent: var(--v-primary-base);
 .add-new-main {
   // background: $black-accent1;
   border-radius: 8px;
@@ -232,7 +244,7 @@ $primary-accent: #ffe082;
 }
 </style>
 <style lang="scss">
-$primary-accent: #ffe082;
+$primary-accent: var(--v-primary-base);
 $black-accent2: #272727;
 #duedate-wrapper {
   .field-input {
@@ -249,6 +261,12 @@ $black-accent2: #272727;
       border: 1px solid $primary-accent;
       outline: none;
     }
+  }
+}
+.page-title-main {
+  p {
+    font-weight: 100;
+    font-size: 1.2rem;
   }
 }
 </style>

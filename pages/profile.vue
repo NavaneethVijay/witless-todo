@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="page-title-main">
-      <h1 class="page-title">Account</h1>
+      <h1 class="page-title">Profile</h1>
     </div>
     <v-card flat :color="!$vuetify.theme.dark ? 'grey lighten-4' : ''">
       <v-avatar class="ma-3 mb-0" size="125" tile>
@@ -50,14 +50,14 @@ export default {
       profile: {
         displayName: '',
         email: '',
-        photoURL: ''
-      }
+        photoURL: '',
+      },
     }
   },
   computed: {
     ...mapGetters({
-      user: 'user/getUser'
-    })
+      user: 'user/getUser',
+    }),
   },
   created() {
     this.profile = { ...this.user }
@@ -84,7 +84,7 @@ export default {
         })
       this.$store.commit('user/logoutUser')
       this.$router.push('/')
-    }
-  }
+    },
+  },
 }
 </script>

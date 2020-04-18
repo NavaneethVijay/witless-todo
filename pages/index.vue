@@ -2,7 +2,9 @@
   <div class="main-page">
     <div v-if="isLoggedIn">
       <div class="user-info">
-        <h1>Hi, {{ username }}</h1>
+        <h1>
+          Hi there,<br /><span class="username"> {{ username }}</span>
+        </h1>
       </div>
       <!-- <div class="filters">
         <div class="content-main">
@@ -36,26 +38,28 @@
             />
           </div>
         </div>
-        <div
-          v-if="pendingTasks && pendingTasks.length == 0"
-          class="list-emtpy-img"
-        >
-          <img src="/list-empty.png" alt="" />
-          <h2>
-            "It's never too late to start. It's always too late to wait."
-          </h2>
-          <v-btn
-            elevation="0"
-            to="/tasks/add"
-            color="primary"
-            class="mt-4 black--text"
+        <v-sheet>
+          <div
+            v-if="pendingTasks && pendingTasks.length == 0"
+            class="list-emtpy-img"
           >
-            <v-icon color="black" left small>
-              fas fa-plus
-            </v-icon>
-            Add new task
-          </v-btn>
-        </div>
+            <img src="/list-empty.png" alt="" />
+            <h2>
+              "It's never too late to start. It's always too late to wait."
+            </h2>
+            <v-btn
+              elevation="0"
+              to="/tasks/add"
+              color="primary"
+              class="mt-4 black--text"
+            >
+              <v-icon color="black" left small>
+                fas fa-plus
+              </v-icon>
+              Add new task
+            </v-btn>
+          </div>
+        </v-sheet>
         <div
           v-if="progressTasks && progressTasks.length > 0"
           class="task-sections"
@@ -273,7 +277,7 @@ export default {
 <style lang="scss">
 .user-info {
   margin: 20px 0 30px 0;
-  h1 {
+  .username {
     font-weight: 400;
   }
 }
@@ -282,6 +286,7 @@ export default {
 <style lang="scss" scoped>
 .list-emtpy-img {
   text-align: center;
+  padding: 20px;
   img {
     width: 100%;
     max-width: 560px;
@@ -289,6 +294,16 @@ export default {
   h2 {
     font-weight: 200;
     font-size: 1.6rem;
+  }
+  animation-delay: 1s;
+  animation: showLater 0.8s ease;
+}
+@keyframes showLater {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 .witless-more-info {

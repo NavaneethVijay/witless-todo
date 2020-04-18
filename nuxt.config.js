@@ -35,7 +35,7 @@ module.exports = {
   loading: { color: '#fff' },
   loadingIndicator: {
     name: 'wandering-cubes',
-    color: '#14ffec',
+    color: '#ffd54f',
     background: 'black',
   },
   /*
