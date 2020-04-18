@@ -11,14 +11,25 @@ export const state = () => ({
 })
 
 export const getters = {
-  getUserStatus: state => !!state.isAuth,
-  getUser: state => state.user,
-  getAllTasks: state => state.tasks,
-  getUserLists: state => state.lists,
-  getPendingTasks: state => state.tasks.pending,
-  getProgressTasks: state => state.tasks.completed,
-  getCurrentTask: state => state.currentTask,
-  getCurrentListTasks: state => state.currentListTasks
+  getUserStatus: (state) => !!state.isAuth,
+  getUser: (state) => state.user,
+  getAllTasks: (state) => state.tasks,
+  getUserLists: (state) => state.lists,
+  getPendingTasks: (state) => state.tasks.pending,
+  getProgressTasks: (state) => {
+    let temptask = [...state.tasks.completed]
+    let chunked = {}
+    let initialChunk = 0
+    let chunk = 4
+    temptask.forEach((item, i) => {
+      chunked[i] = []
+      chunked[i].push(temptask.splice(initialChunk, chunk))
+    })
+    return state.tasks.completed
+    // return Object.values(chunked)
+  },
+  getCurrentTask: (state) => state.currentTask,
+  getCurrentListTasks: (state) => state.currentListTasks
 }
 
 export const mutations = {
@@ -87,7 +98,7 @@ export const actions = {
       .collection('users')
       .doc(user.uid)
       .get()
-      .then(doc => {
+      .then((doc) => {
         if (doc.exists) {
           context.dispatch('updateUser', { ...{ uid: doc.id }, ...doc.data() })
         } else {
@@ -130,9 +141,29 @@ export const actions = {
         .doc(uid)
         .collection('lists')
         .get()
-        .then(querySnapshot => {
-          querySnapshot.forEach(doc => {
-            context.commit('setUserLists', { ...{ id: doc.id }, ...doc.data() })
+        .then((querySnapshot) => {
+          querySnapshot.forEach(async (doc) => {
+            let listLasks = 0
+            await this.$fireStore
+              .collection('users')
+              .doc(uid)
+              .collection('tasks')
+              .get()
+              .then((querySnapshot) => {
+                querySnapshot.forEach((listDoc) => {
+                  if (listDoc.data().list == doc.id) {
+                    listLasks++
+                  }
+                })
+                context.commit('setUserLists', {
+                  ...{ id: doc.id },
+                  ...{ count: listLasks },
+                  ...doc.data()
+                })
+              })
+              .catch(function(error) {
+                console.log('Error getting document:', error)
+              })
           })
         })
       context.commit('ui/unsetLoader', {}, { root: true })
@@ -164,8 +195,8 @@ export const actions = {
       .doc(uid)
       .collection('tasks')
       .get()
-      .then(querySnapshot => {
-        querySnapshot.forEach(doc => {
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
           if (doc.data().status == status) {
             context.commit('setTasks', {
               status,
@@ -192,7 +223,7 @@ export const actions = {
       .collection('tasks')
       .doc(docId)
       .get()
-      .then(doc => {
+      .then((doc) => {
         if (doc.exists) {
           context.commit('setCurrentTask', {
             task: { ...{ id: doc.id }, ...doc.data() }
@@ -226,7 +257,7 @@ export const actions = {
         context.dispatch('getTasks', { status: 'pending' })
         this.$router.push('/')
       })
-      .catch(error => {
+      .catch((error) => {
         context.commit('ui/unsetLoader', {}, { root: true })
         console.error('Error removing document: ', error)
       })
@@ -241,8 +272,8 @@ export const actions = {
       .doc(uid)
       .collection('tasks')
       .get()
-      .then(querySnapshot => {
-        querySnapshot.forEach(doc => {
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
           if (doc.data().list == listId) {
             context.commit('setCurrentListTasks', {
               task: { ...{ id: doc.id }, ...doc.data() }

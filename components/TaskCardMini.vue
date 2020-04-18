@@ -1,5 +1,7 @@
 <template>
   <v-card
+    flat
+    :color="!$vuetify.theme.dark ? 'grey lighten-4' : ''"
     :to="'/tasks/view/' + task.id"
     class="task-card"
     :data-progress="task.progress"

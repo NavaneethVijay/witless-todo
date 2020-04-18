@@ -178,12 +178,18 @@ body {
 }
 .task-labels {
   display: flex;
+  a {
+    display: inherit;
+    color: $primary-accent;
+    font-size: 12px;
+  }
   .task-label {
+    color: $primary-accent;
     box-sizing: border-box;
-    padding: 5px 15px;
-    margin: 10px 10px 10px 0;
+    padding: 2px 12px;
+    margin: 0 0 10px 0;
     border-radius: 4px;
-    border: 1px dotted #fff;
+    border: 1px dotted $primary-accent;
     text-transform: capitalize;
   }
 }

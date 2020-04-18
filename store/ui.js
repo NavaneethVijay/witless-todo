@@ -3,7 +3,7 @@ export const state = () => ({
 })
 
 export const getters = {
-  showLoader: state => state.isLoading
+  showLoader: (state) => state.isLoading
 }
 
 export const mutations = {

@@ -1,53 +1,14 @@
 <template>
   <v-app dark>
-    <v-system-bar height="5px" color="primary"></v-system-bar>
-    <div class="layout-main" id="scroll-area-1">
+    <div id="scroll-area-1" class="layout-main">
       <Loader />
       <Header v-if="isLoggedIn" class="header" />
       <v-container>
         <div class="router-content">
-          <v-card height="max-content" class="hidden-sm-and-down">
-            <v-navigation-drawer
-              :light="$vuetify.theme.dark"
-              permanent
-              floating
-              color="primary"
-            >
-              <v-list-item>
-                <v-list-item-content>
-                  <v-list-item-title class="title">
-                    Witless
-                  </v-list-item-title>
-                  <v-list-item-subtitle>
-                    Plan your day with Witless
-                  </v-list-item-subtitle>
-                </v-list-item-content>
-              </v-list-item>
-
-              <v-divider></v-divider>
-
-              <v-list dense nav>
-                <v-list-item
-                  v-for="item in items"
-                  :key="item.title"
-                  :to="item.link"
-                  link
-                >
-                  <v-list-item-icon>
-                    <v-icon small>{{ item.icon }}</v-icon>
-                  </v-list-item-icon>
-
-                  <v-list-item-content>
-                    <v-list-item-title>{{ item.title }}</v-list-item-title>
-                  </v-list-item-content>
-                </v-list-item>
-              </v-list>
-            </v-navigation-drawer>
-          </v-card>
-
           <nuxt class="nuxt-content-main" />
         </div>
         <v-btn
+          v-if="isLoggedIn"
           style="z-index: 10; bottom: 70px"
           fixed
           bottom
@@ -57,10 +18,10 @@
           color="primary"
           fab
         >
-          <v-icon small>fas fa-plus</v-icon>
+          <v-icon small color="black">fas fa-plus</v-icon>
         </v-btn>
       </v-container>
-      <BottomSheet class="hidden-sm-and-up" v-if="isLoggedIn" />
+      <BottomSheet v-if="isLoggedIn" />
     </div>
   </v-app>
 </template>
@@ -114,6 +75,7 @@ export default {
   width: 100%;
   @media (min-width: 1024px) {
     max-width: 50%;
+    margin: auto;
   }
 }
 *,

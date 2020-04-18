@@ -17,6 +17,7 @@
         </v-expansion-panel-header>
 
         <v-expansion-panel-content>
+          {{ list.count }} {{ list.count > 1 ? 'tasks' : 'task' }} available
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn
@@ -24,7 +25,6 @@
               class="text-capitalize"
               small
               text
-              flat
               color="primary"
             >
               View tasks

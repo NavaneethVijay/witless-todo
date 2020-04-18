@@ -1,10 +1,10 @@
 <template>
   <div>
-    <p class="task-list amber--text text--lighten-3">Task List</p>
+    <p class="task-list">Task List</p>
     <v-skeleton-loader
+      v-if="!listLabelName"
       class="pt-2"
       height="48px"
-      v-if="!listLabelName"
       type="chip"
     ></v-skeleton-loader>
     <h1 v-else class="text-capitalize list-label-name ">
@@ -41,6 +41,9 @@ import TaskCardMini from '@/components/TaskCardMini'
 
 export default {
   transition: 'slide-down',
+  components: {
+    TaskCardMini
+  },
   async fetch({ store, route }) {
     await store.dispatch('user/fetchListTasks', { listId: route.params.id })
   },
@@ -50,9 +53,6 @@ export default {
     listname: '',
     listLabelName: ''
   }),
-  components: {
-    TaskCardMini
-  },
   computed: {
     ...mapGetters({
       currentUser: 'user/getUser',

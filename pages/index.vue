@@ -50,17 +50,32 @@
               :task="task"
             />
           </div>
+          <!-- <div class="task-slider">
+            <div v-for="(set, a) in progressTasks" :key="a" class="task-slide">
+              <div
+                v-for="(tasks, index) in set"
+                :key="index"
+                class="task-in-progress-list"
+              >
+                <TaskCardMini
+                  v-for="(task, i) in tasks"
+                  :key="i"
+                  :task="task"
+                />
+              </div>
+            </div>
+          </div> -->
         </div>
-      </div>
 
-      <!-- <nuxtLink to="/tasks/add" class="fab-wrapper">
+        <!-- <nuxtLink to="/tasks/add" class="fab-wrapper">
         <div class="fab-icon">
           <i class="icofont-plus" />
         </div>
       </nuxtLink> -->
-    </div>
-    <div v-if="!isLoggedIn">
-      <Auth />
+      </div>
+      <div v-if="!isLoggedIn">
+        <Auth />
+      </div>
     </div>
   </div>
 </template>
@@ -72,6 +87,10 @@ export default {
   components: {
     TaskCardMini,
     Auth
+  },
+  fetch({ store }) {
+    store.dispatch('user/getTasks', { status: 'pending' })
+    store.dispatch('user/getTasks', { status: 'completed' })
   },
   data() {
     return {
@@ -138,10 +157,6 @@ export default {
       ]
     }
   },
-  fetch({ store }) {
-    store.dispatch('user/getTasks', { status: 'pending' })
-    store.dispatch('user/getTasks', { status: 'completed' })
-  },
   computed: {
     ...mapGetters({
       isLoggedIn: 'user/getUserStatus',
@@ -156,6 +171,21 @@ export default {
 }
 </script>
 <style lang="scss">
+.task-sections {
+  overflow: hidden;
+}
+.task-slider {
+  display: flex;
+  flex-wrap: nowrap;
+  width: 100%;
+  overflow-x: auto;
+  .task-slide {
+    flex-basis: 100%;
+    width: 100%;
+    min-width: 100%;
+    margin-right: 10px;
+  }
+}
 .bottom-sheet-main {
   visibility: hidden;
   opacity: 0;

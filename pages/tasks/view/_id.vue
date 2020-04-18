@@ -4,38 +4,38 @@
       <div class="task-view-main">
         <div class="task-content">
           <header class="task-header">
-            <p class="task-date">
-              Due on {{ currentTask.due_date | moment('MMMM Do YYYY') }}
-            </p>
+            <!-- <p class="task-date">
+              Created on {{ currentTask.created | moment('MMMM Do YYYY') }}
+            </p> -->
             <h1
+              class="mb-4"
               :contenteditable="canEdit"
               @blur="updateTaskName"
               @dblclick="onEdit"
             >
               {{ currentTask.name }}
             </h1>
-            <p class="task-status">
-              {{ currentTask.status }}<i class="icofont-children-care" />
-            </p>
           </header>
-          <v-skeleton-loader
-            v-if="!listLabelName"
-            class="pt-2"
-            type="chip"
-          ></v-skeleton-loader>
-          <div v-else class="task-labels pt-4">
-            <nuxt-link :to="'/lists/' + currentTask.list">
-              <span class="task-label">{{ listLabelName.name }}</span>
-            </nuxt-link>
-          </div>
           <div class="task-details-main">
             <p
               :contenteditable="canEdit"
+              class="task-description mb-4"
               @blur="updateTaskDescription"
               @dblclick="onEdit"
-              class="task-description"
             >
               {{ currentTask.description }}
+            </p>
+            <v-skeleton-loader
+              v-if="!listLabelName"
+              type="text"
+            ></v-skeleton-loader>
+            <div v-else class="task-labels">
+              <nuxt-link :to="'/lists/' + currentTask.list">
+                <span class="task-label">{{ listLabelName.name }}</span>
+              </nuxt-link>
+            </div>
+            <p class="task-status mt-4">
+              {{ currentTask.status }}<i class="icofont-children-care" />
             </p>
             <div class="task-actions">
               <v-switch
@@ -52,7 +52,7 @@
       <div class="task-footer">
         <div class="footer-actions-content">
           <p class="task-created">
-            Created on {{ currentTask.created | moment('MMMM Do YYYY') }}
+            Due on {{ currentTask.due_date | moment('MMMM Do YYYY') }}
           </p>
           <span
             class="delete-icon"
@@ -132,7 +132,7 @@ export default {
         this.updatingTask = false
       }
     },
-    onEdit(evt) {
+    onEdit() {
       this.canEdit = true
     },
     getListLabel() {
@@ -143,7 +143,7 @@ export default {
         .collection('lists')
         .doc(this.currentTask.list)
         .get()
-        .then(doc => {
+        .then((doc) => {
           if (doc.exists) {
             this.listLabelName = doc.data()
           } else {
@@ -192,7 +192,7 @@ export default {
 .task-details-main {
   box-sizing: border-box;
   padding: 10px 0;
-  margin-top: 20px;
+  margin-top: 0;
 }
 .task-view-main {
   // border: 1px solid #1b1b1b;

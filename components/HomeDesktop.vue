@@ -79,6 +79,10 @@ export default {
     TaskCardMini,
     Auth
   },
+  fetch({ store }) {
+    store.dispatch('user/getTasks', { status: 'pending' })
+    store.dispatch('user/getTasks', { status: 'completed' })
+  },
   data() {
     return {
       clicked: false,
@@ -143,10 +147,6 @@ export default {
         }
       ]
     }
-  },
-  fetch({ store }) {
-    store.dispatch('user/getTasks', { status: 'pending' })
-    store.dispatch('user/getTasks', { status: 'completed' })
   },
   computed: {
     ...mapGetters({

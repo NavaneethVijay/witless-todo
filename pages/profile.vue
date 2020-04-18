@@ -3,7 +3,7 @@
     <div class="page-title-main">
       <h1 class="page-title">Account</h1>
     </div>
-    <v-card flat>
+    <v-card flat :color="!$vuetify.theme.dark ? 'grey lighten-4' : ''">
       <v-avatar class="ma-3 mb-0" size="125" tile>
         <v-img :src="profile.photoURL"></v-img>
       </v-avatar>
@@ -15,19 +15,19 @@
       </v-card-subtitle>
       <v-list-item>
         <v-list-item-content>
-          <v-btn @click="logout" color="error">
+          <v-btn color="error" @click="logout">
             Logout
           </v-btn>
         </v-list-item-content>
       </v-list-item>
     </v-card>
-    <v-list class="mt-4">
+    <v-list class="mt-4" :color="!$vuetify.theme.dark ? 'grey lighten-4' : ''">
       <v-subheader>Settings</v-subheader>
       <v-list-item>
         <v-list-item-content class="pl-2">
           <v-switch
-            color="amber lighten-3"
             v-model="$vuetify.theme.dark"
+            color="amber lighten-3"
             hide-details
             inset
             label="Use Dark theme"
