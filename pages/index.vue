@@ -73,8 +73,42 @@
         </div>
       </nuxtLink> -->
       </div>
-      <div v-if="!isLoggedIn">
-        <Auth />
+    </div>
+    <div v-if="!isLoggedIn">
+      <Auth />
+      <div class="witless-more-info">
+        <div class="info-item">
+          <i class="icofont-tasks-alt icofont-2x"></i>
+          <h2>Task</h2>
+          <p>
+            Turn complex actions simpler by converting them to small tasks
+          </p>
+        </div>
+
+        <div class="info-item">
+          <i class="icofont-list icofont-2x"></i>
+          <h2>Lists</h2>
+          <p>
+            Group all related tasks in an easiliy accessible list
+          </p>
+        </div>
+
+        <div class="info-item">
+          <i class="icofont-thunder-light icofont-2x"></i>
+          <h2>Install app</h2>
+          <p>
+            Witless is <b>Progressive Web App</b>, the next generation of mobile
+            applications
+          </p>
+        </div>
+
+        <div class="info-item">
+          <i class="icofont-chart-histogram icofont-2x"></i>
+          <h2>Statistics</h2>
+          <p>
+            Schedule your reports straight to your mail
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -89,8 +123,10 @@ export default {
     Auth
   },
   fetch({ store }) {
-    store.dispatch('user/getTasks', { status: 'pending' })
-    store.dispatch('user/getTasks', { status: 'completed' })
+    if (store.state.user.isAuth) {
+      store.dispatch('user/getTasks', { status: 'pending' })
+      store.dispatch('user/getTasks', { status: 'completed' })
+    }
   },
   data() {
     return {
@@ -220,5 +256,11 @@ export default {
   h1 {
     font-weight: 400;
   }
+}
+</style>
+
+<style lang="scss" scoped>
+.witless-more-info {
+  margin-top: 100px;
 }
 </style>

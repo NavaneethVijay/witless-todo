@@ -42,6 +42,7 @@
 import { mapGetters } from 'vuex'
 export default {
   transition: 'slide-down',
+  middleware: 'authenticated',
   data() {
     return {
       hasSaved: false,

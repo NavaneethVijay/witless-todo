@@ -77,6 +77,7 @@
 import { mapGetters, mapActions } from 'vuex'
 export default {
   transition: 'slide-down',
+  middleware: 'authenticated',
   async fetch({ store }) {
     await store.dispatch('user/fetchUserLists')
   },

@@ -87,6 +87,7 @@ import moment from 'moment'
 
 export default {
   name: 'AddNewTask',
+  middleware: 'authenticated',
   computed: {
     ...mapGetters({
       isLoggedIn: 'user/getUserStatus',

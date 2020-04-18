@@ -41,6 +41,7 @@ import TaskCardMini from '@/components/TaskCardMini'
 
 export default {
   transition: 'slide-down',
+  middleware: 'authenticated',
   components: {
     TaskCardMini
   },

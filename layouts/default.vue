@@ -5,7 +5,7 @@
       <Header v-if="isLoggedIn" class="header" />
       <v-container>
         <div class="router-content">
-          <nuxt class="nuxt-content-main" />
+          <nuxt class="nuxt-content-main" :class="{ auth: isLoggedIn }" />
         </div>
         <v-btn
           v-if="isLoggedIn"
@@ -73,9 +73,11 @@ export default {
   padding: 10px;
   margin: 10px;
   width: 100%;
-  @media (min-width: 1024px) {
-    max-width: 50%;
-    margin: auto;
+  &.auth {
+    @media (min-width: 1024px) {
+      max-width: 50%;
+      margin: auto;
+    }
   }
 }
 *,
