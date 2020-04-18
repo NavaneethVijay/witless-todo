@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-app-bar flat>
-      <v-container>
+      <v-container class="header-container">
         <div class="header-content">
           <i class="icofont-deer-head" />
           <v-toolbar-title class="pl-2">
@@ -10,6 +10,19 @@
             </NuxtLink></v-toolbar-title
           >
         </div>
+        <v-btn
+          v-if="!isLoggedIn"
+          href="https://github.com/NavaneethVijay/witless-todo"
+          target="__blank"
+          small
+          outlined
+          class="text-capitalize"
+        >
+          Visit Github
+          <v-icon right>
+            fab fa-github
+          </v-icon>
+        </v-btn>
       </v-container>
     </v-app-bar>
   </div>
@@ -19,25 +32,25 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
   data() {
     return {
-      show: false
+      show: false,
     }
   },
   computed: {
     ...mapGetters({
       isLoggedIn: 'user/getUserStatus',
-      user: 'user/getUser'
+      user: 'user/getUser',
     }),
     username() {
       return this.user ? this.user.displayName : ', there!'
-    }
+    },
   },
   methods: {
     ...mapActions('user', {
-      updateUser: 'updateUser'
+      updateUser: 'updateUser',
     }),
     logout() {
       this.updateUser({
-        currentUser: null
+        currentUser: null,
       })
       this.$fireAuth
         .signOut()
@@ -50,13 +63,18 @@ export default {
         })
 
       this.$router.push('/')
-    }
-  }
+    },
+  },
 }
 </script>
 <style lang="scss">
 .header-content {
   display: flex;
+  align-items: center;
+}
+.header-container {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
 }
 .dropdown-list {

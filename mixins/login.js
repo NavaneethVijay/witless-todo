@@ -4,12 +4,12 @@ export default {
   methods: {
     ...mapMutations('ui', {
       showLoader: 'setLoader',
-      hideLoader: 'unsetLoader'
+      hideLoader: 'unsetLoader',
     }),
     ...mapActions('user', {
       updateUser: 'updateUser',
       createNewList: 'createNewList',
-      getTasks: 'getTasks'
+      getTasks: 'getTasks',
     }),
     async googleSignUp() {
       this.showLoader()
@@ -33,7 +33,7 @@ export default {
                 uid,
                 email,
                 displayName,
-                photoURL
+                photoURL,
               })
 
               if (!doc.exists) {
@@ -43,7 +43,7 @@ export default {
                   .set({
                     email,
                     photoURL,
-                    displayName
+                    displayName,
                   })
                   .then(async () => {
                     await this.createNewList('default')
@@ -66,6 +66,6 @@ export default {
           this.hideLoader()
           console.error(error)
         })
-    }
-  }
+    },
+  },
 }

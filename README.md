@@ -1,10 +1,10 @@
-# witless
+# Witless
 
-> My phenomenal Nuxt.js project
+> Plan your day with Witless. Whether you're planning a holiday, creating a shopping list or managing multiple work projects.
 
-## Build Setup
+## Install Locally
 
-``` bash
+```bash
 # install dependencies
 $ yarn install
 

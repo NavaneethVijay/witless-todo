@@ -81,7 +81,7 @@
           <i class="icofont-tasks-alt icofont-2x"></i>
           <h2>Task</h2>
           <p>
-            Turn complex actions simpler by converting them to small tasks
+            Turn complex actions simpler by converting them to small tasks.
           </p>
         </div>
 
@@ -89,7 +89,7 @@
           <i class="icofont-list icofont-2x"></i>
           <h2>Lists</h2>
           <p>
-            Group all related tasks in an easiliy accessible list
+            Group all related tasks in an easiliy accessible list.
           </p>
         </div>
 
@@ -97,8 +97,8 @@
           <i class="icofont-thunder-light icofont-2x"></i>
           <h2>Install app</h2>
           <p>
-            Witless is <b>Progressive Web App</b>, the next generation of mobile
-            applications
+            Witless is a <b>Progressive Web App</b>, the next generation of
+            mobile applications.
           </p>
         </div>
 
@@ -106,7 +106,7 @@
           <i class="icofont-chart-histogram icofont-2x"></i>
           <h2>Statistics</h2>
           <p>
-            Schedule your reports straight to your mail
+            Schedule your reports straight to your mail.
           </p>
         </div>
       </div>
@@ -120,7 +120,7 @@ import Auth from '@/components/Auth'
 export default {
   components: {
     TaskCardMini,
-    Auth
+    Auth,
   },
   fetch({ store }) {
     if (store.state.user.isAuth) {
@@ -139,58 +139,58 @@ export default {
           name: 'Business trip to newyork',
           due_date: ' March, 29th',
           progress: '89%',
-          status: 'pending'
+          status: 'pending',
         },
         {
           icon: 'icofont-pine icofont-1x',
           name: 'Identify resources to be monitored',
           due_date: 'June, 29th',
           progress: '10%',
-          status: 'pending'
+          status: 'pending',
         },
         {
           icon: 'icofont-paper-plane icofont-1x',
           name: 'Install production servers and prerequisite software',
           due_date: ' March, 29th',
           progress: '70%',
-          status: 'pending'
+          status: 'pending',
         },
         {
           icon: 'icofont-paper-plane icofont-1x',
           name: 'Customize the health monitor',
           due_date: ' March, 29th',
           progress: '29%',
-          status: 'pending'
+          status: 'pending',
         },
         {
           icon: 'icofont-paper-plane icofont-1x',
           name: 'Business trip to newyork',
           due_date: ' March, 29th',
           progress: '89%',
-          status: 'pending'
+          status: 'pending',
         },
         {
           icon: 'icofont-pine icofont-1x',
           name: 'Identify resources to be monitored',
           due_date: 'June, 29th',
           progress: '10%',
-          status: 'pending'
+          status: 'pending',
         },
         {
           icon: 'icofont-paper-plane icofont-1x',
           name: 'Install production servers and prerequisite software',
           due_date: ' March, 29th',
           progress: '70%',
-          status: 'pending'
+          status: 'pending',
         },
         {
           icon: 'icofont-paper-plane icofont-1x',
           name: 'Customize the health monitor',
           due_date: ' March, 29th',
           progress: '29%',
-          status: 'pending'
-        }
-      ]
+          status: 'pending',
+        },
+      ],
     }
   },
   computed: {
@@ -198,12 +198,12 @@ export default {
       isLoggedIn: 'user/getUserStatus',
       user: 'user/getUser',
       pendingTasks: 'user/getPendingTasks',
-      progressTasks: 'user/getProgressTasks'
+      progressTasks: 'user/getProgressTasks',
     }),
     username() {
       return this.user.displayName
-    }
-  }
+    },
+  },
 }
 </script>
 <style lang="scss">
@@ -261,6 +261,41 @@ export default {
 
 <style lang="scss" scoped>
 .witless-more-info {
-  margin-top: 100px;
+  margin: 40px auto auto auto;
+  display: flex;
+  flex-wrap: wrap;
+  @media (min-width: 1024px) {
+    max-width: 70%;
+    margin: 80px auto auto auto;
+  }
+  .info-item {
+    padding: 20px;
+    margin-bottom: 20px;
+    i {
+      color: var(--v-primary-base);
+    }
+    h2 {
+      margin: 20px 0;
+    }
+    p {
+      font-weight: 100;
+
+      font-size: 1.1rem;
+    }
+    @media (min-width: 1024px) {
+      &:nth-child(odd) {
+        flex-basis: 60%;
+        p {
+          max-width: 50%;
+        }
+      }
+      &:nth-child(even) {
+        flex-basis: 40%;
+        p {
+          max-width: 70%;
+        }
+      }
+    }
+  }
 }
 </style>

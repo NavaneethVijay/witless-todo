@@ -1,7 +1,7 @@
 {
   "name": "witless",
   "version": "1.0.0",
-  "description": "My phenomenal Nuxt.js project",
+  "description": "Plan your day with Witless. Whether you're planning a holiday, creating a shopping list or managing multiple work projects.",
   "author": "NavaneethVijay",
   "private": true,
   "scripts": {

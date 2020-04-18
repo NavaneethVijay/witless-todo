@@ -2,7 +2,7 @@
   <v-app dark>
     <div id="scroll-area-1" class="layout-main">
       <Loader />
-      <Header v-if="isLoggedIn" class="header" />
+      <Header class="header" />
       <v-container>
         <div class="router-content">
           <nuxt class="nuxt-content-main" :class="{ auth: isLoggedIn }" />
@@ -23,6 +23,23 @@
       </v-container>
       <BottomSheet v-if="isLoggedIn" />
     </div>
+    <v-footer v-if="!isLoggedIn">
+      <v-col class="text-center" cols="12">
+        Witless &copy; {{ new Date().getFullYear() }}. Built with
+        <a href="https://nuxtjs.org/" target="_blank" rel="noopener noreferrer"
+          >NuxtJs</a
+        >
+        and
+        <a
+          href="https://vuetifyjs.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Vuetify</a
+        >
+      </v-col>
+
+      <v-spacer></v-spacer>
+    </v-footer>
   </v-app>
 </template>
 
@@ -35,7 +52,7 @@ export default {
   components: {
     Header,
     Loader,
-    BottomSheet
+    BottomSheet,
   },
   data() {
     return {
@@ -43,16 +60,16 @@ export default {
       items: [
         { title: 'Tasks', icon: 'fas fa-tasks', link: '/' },
         { title: 'My Lists', icon: 'fas fa-tag', link: '/lists' },
-        { title: 'Profile', icon: 'fas fa-user', link: '/profile' }
+        { title: 'Profile', icon: 'fas fa-user', link: '/profile' },
       ],
-      mini: true
+      mini: true,
     }
   },
   computed: {
     ...mapGetters({
-      isLoggedIn: 'user/getUserStatus'
-    })
-  }
+      isLoggedIn: 'user/getUserStatus',
+    }),
+  },
 }
 </script>
 
