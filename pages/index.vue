@@ -37,6 +37,26 @@
           </div>
         </div>
         <div
+          v-if="pendingTasks && pendingTasks.length == 0"
+          class="list-emtpy-img"
+        >
+          <img src="/list-empty.png" alt="" />
+          <h2>
+            "It's never too late to start. It's always too late to wait."
+          </h2>
+          <v-btn
+            elevation="0"
+            to="/tasks/add"
+            color="primary"
+            class="mt-4 black--text"
+          >
+            <v-icon color="black" left small>
+              fas fa-plus
+            </v-icon>
+            Add new task
+          </v-btn>
+        </div>
+        <div
           v-if="progressTasks && progressTasks.length > 0"
           class="task-sections"
         >
@@ -260,6 +280,17 @@ export default {
 </style>
 
 <style lang="scss" scoped>
+.list-emtpy-img {
+  text-align: center;
+  img {
+    width: 100%;
+    max-width: 560px;
+  }
+  h2 {
+    font-weight: 200;
+    font-size: 1.6rem;
+  }
+}
 .witless-more-info {
   margin: 40px auto auto auto;
   display: flex;

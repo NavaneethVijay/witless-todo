@@ -19,7 +19,7 @@
           class="text-capitalize"
         >
           Visit Github
-          <v-icon right>
+          <v-icon small right>
             fab fa-github
           </v-icon>
         </v-btn>

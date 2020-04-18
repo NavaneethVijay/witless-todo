@@ -23,7 +23,7 @@
       </v-container>
       <BottomSheet v-if="isLoggedIn" />
     </div>
-    <v-footer v-if="!isLoggedIn">
+    <v-footer fixed v-if="!isLoggedIn">
       <v-col class="text-center" cols="12">
         Witless &copy; {{ new Date().getFullYear() }}. Built with
         <a href="https://nuxtjs.org/" target="_blank" rel="noopener noreferrer"

@@ -1,6 +1,11 @@
 <template>
   <div class="task-view-page-main">
-    <v-card v-if="currentTask" :disabled="updatingTask" :loading="updatingTask">
+    <v-card
+      v-if="currentTask"
+      :disabled="updatingTask"
+      :loading="updatingTask"
+      :color="!$vuetify.theme.dark ? 'grey lighten-4' : ''"
+    >
       <div class="task-view-main">
         <div class="task-content">
           <header class="task-header">
@@ -27,7 +32,7 @@
             </p>
             <v-skeleton-loader
               v-if="!listLabelName"
-              type="text"
+              type="table-cell"
             ></v-skeleton-loader>
             <div v-else class="task-labels">
               <nuxt-link :to="'/lists/' + currentTask.list">
@@ -84,18 +89,18 @@ export default {
       text: '',
       status: false,
       updatingTask: false,
-      snackbar: false
+      snackbar: false,
     }
   },
   computed: {
     ...mapGetters({
       currentUser: 'user/getUser',
-      currentTask: 'user/getCurrentTask'
-    })
+      currentTask: 'user/getCurrentTask',
+    }),
   },
   async fetch({ route, store }) {
     await store.dispatch('user/getCurrentTask', {
-      docId: route.params.id
+      docId: route.params.id,
     })
   },
   async mounted() {
@@ -105,7 +110,7 @@ export default {
   },
   methods: {
     ...mapActions('user', {
-      deleteTask: 'deleteTask'
+      deleteTask: 'deleteTask',
     }),
     async updateTaskName(evt) {
       if (this.canEdit) {
@@ -114,8 +119,8 @@ export default {
         await this.$store.dispatch('user/updateTaskDetails', {
           docId: this.currentTask.id,
           task: {
-            name: src
-          }
+            name: src,
+          },
         })
         this.updatingTask = false
       }
@@ -127,8 +132,8 @@ export default {
         await this.$store.dispatch('user/updateTaskDetails', {
           docId: this.currentTask.id,
           task: {
-            description: src
-          }
+            description: src,
+          },
         })
         this.updatingTask = false
       }
@@ -159,12 +164,12 @@ export default {
       this.updatingTask = true
       await this.$store.dispatch('user/changeTaskStatus', {
         docId: this.currentTask.id,
-        status: item
+        status: item,
       })
       this.updatingTask = false
       this.snackbar = true
-    }
-  }
+    },
+  },
 }
 </script>
 <style lang="scss" scoped>
@@ -217,7 +222,7 @@ export default {
   box-sizing: border-box;
   padding: 15px 10px;
   background: #181717;
-  border-radius: 0 0 8px 8px;
+  border-radius: 0 0 4px 4px;
 
   .task-created {
     font-size: 14px;
